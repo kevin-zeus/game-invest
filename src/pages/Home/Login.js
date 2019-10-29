@@ -87,7 +87,6 @@ class Login extends Component {
       </WrapDiv>
     );
   }
-
 }
 
 export default Form.create()(Login);
