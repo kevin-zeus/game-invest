@@ -1,27 +1,25 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/es/locale/zh_CN';
 import 'moment/locale/zh-cn';
 
-import Home from './pages/Home/Home';
-import RiskAppetite from './pages/Experiment/RiskAppetite';
+import HomeRoot from './pages/Home';
+import Admin from './pages/Admin/Admin';
 
-class AppRouter extends Component {
-  
+class AppRouter extends PureComponent {
   render() {
     return (
       <ConfigProvider locale={zhCN}>
         <Router>
           <Switch>
-            <Route path='/' exact component={Home} />
-            <Route path='/risk' exact component={RiskAppetite} />
+            <Route path="/admin" exact component={Admin} />
+            <Route path="/" component={HomeRoot} />
           </Switch>
         </Router>
       </ConfigProvider>
     );
   }
-
 }
 
 export default AppRouter;

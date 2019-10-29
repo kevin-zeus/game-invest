@@ -1,12 +1,4 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: #e2e2e2 !important;
-}
+
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
@@ -17,13 +9,7 @@ html, body, #root {
   width: 100%;
   height: 100vh;
 }
-#root {
-  background-color: white;
-}
 
-@media screen and ( min-width: 900px ) {
-  #root {
-    max-width: 480px;
-    margin: 0 auto;
-  }
+.ant-layout {
+	background-color: white !important;
 }

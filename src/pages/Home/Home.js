@@ -1,11 +1,27 @@
 import React, { Component } from 'react';
 import { Layout, List, Button } from 'antd';
+import styled from 'styled-components';
 
-import Footer from '../../components/Footer';
-import styles from './home.module.less';
 import shaizi from '../../assets/shaizi.svg';
 
-const { Header, Content } = Layout;
+const { Content } = Layout;
+const Header = styled.div`
+  text-align: center;
+  margin: 20px;
+  font-size: 20px;
+  color: #FF9912;
+`;
+const ImgBox = styled.div`
+  text-align: center;
+  margin: 50px 0;
+  img {
+    width: 30%;
+  }
+`;
+const ListBox = styled.div`
+  padding: 30px 20px;
+`;
+
 
 const games = [
   {
@@ -27,9 +43,7 @@ const games = [
 ];
 
 class Home extends Component {
-
   navigateTo = (path) => {
-    
     console.log(path);
   }
 
@@ -37,34 +51,34 @@ class Home extends Component {
     return (
       <div>
         <Layout>
-          <Header className={styles.header}>投资小游戏</Header>
-          <Content className={styles.whiteBackground}>
-            <div className={styles.imgBox}>
+          <Header>投资小游戏</Header>
+          <Content>
+            <ImgBox>
               <img src={shaizi} alt="骰子" />
-            </div>
-            <div className={styles.list}>
+            </ImgBox>
+            <ListBox>
               <List
                 dataSource={games}
-                renderItem={item => (
+                renderItem={(item) => (
                   <List.Item
                     actions={[
                       <Button
                         type="link"
-                        onClick={() => { this.navigateTo(item.path) }}
-                      >开始测试</Button>]}
+                        onClick={() => { this.navigateTo(item.path); }}
+                      >
+                        开始测试
+                      </Button>]}
                   >
                     {item.title}
                   </List.Item>
                 )}
               />
-            </div>
+            </ListBox>
           </Content>
-          <Footer />
         </Layout>
       </div>
     );
   }
-
 }
 
 export default Home;
