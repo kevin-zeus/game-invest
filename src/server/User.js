@@ -42,6 +42,16 @@ class User {
   static logout() {
     AV.User.logOut();
   }
+
+  /**
+   * 获取当前登录的用户
+   */
+  static getCurrentUser() {
+    if (this.isLogined) {
+      return AV.User.current();
+    }
+    return null;
+  }
 }
 
 export default User;

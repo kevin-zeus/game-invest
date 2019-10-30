@@ -5,6 +5,11 @@ import styled from 'styled-components';
 import shaizi from '../../assets/shaizi.svg';
 
 const { Content } = Layout;
+const WrapLayout = styled(Layout)`
+  & {
+    background-color: white !important;
+  }
+`;
 const Header = styled.div`
   text-align: center;
   margin: 20px;
@@ -44,13 +49,14 @@ const games = [
 
 class Home extends Component {
   navigateTo = (path) => {
-    console.log(path);
+    const { history } = this.props;
+    history.push(path);
   }
 
   render() {
     return (
       <div>
-        <Layout>
+        <WrapLayout>
           <Header>投资小游戏</Header>
           <Content>
             <ImgBox>
@@ -75,7 +81,7 @@ class Home extends Component {
               />
             </ListBox>
           </Content>
-        </Layout>
+        </WrapLayout>
       </div>
     );
   }

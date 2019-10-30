@@ -13,7 +13,7 @@ class AppRouter extends PureComponent {
       <ConfigProvider locale={zhCN}>
         <Router>
           <Switch>
-            <Route path="/admin" exact component={Admin} />
+            <Route path="/admin" component={Admin} />
             <Route path="/" component={HomeRoot} />
           </Switch>
         </Router>

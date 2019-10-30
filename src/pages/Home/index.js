@@ -11,7 +11,7 @@ import UserService from '../../server/User';
 
 const Wrap = styled.div`
   @media screen and (min-width: 800px) {
-    height: 100%;
+    min-height: 100%;
     & {
       max-width: 480px;
       margin: 0 auto;
