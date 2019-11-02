@@ -7,7 +7,7 @@ class File {
    * @param {String} filename
    * @param {Function} onprogress
    */
-  static upload(localFile, filename, onprogress) {
+  static async upload(localFile, filename, onprogress) {
     const file = new AV.File(filename, localFile);
     return file.save({
       onprogress,

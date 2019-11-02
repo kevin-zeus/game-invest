@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import {
-  Form, Input, Button, Icon,
+  Form, Input, Button, Icon, message,
 } from 'antd';
+
+import QuestionSevice from '../../server/Question';
 
 let id = 0;
 const { TextArea } = Input;
@@ -29,12 +31,25 @@ class Calculation extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const { form } = this.props;
-    form.validateFields((err, values) => {
+    const { form, questionID } = this.props;
+    form.validateFields(async (err, values) => {
       if (!err) {
-        console.log(values);
+        console.log('开始上传');
+        const result = this.formatResult(values);
+        const question = await QuestionSevice.setQuestionList(questionID, result);
+        if (question) message.success('更新成功!');
       }
     });
+  }
+
+  formatResult = (fieldResult) => {
+    const result = [];
+    const { values } = fieldResult;
+    const keys = Object.keys(values);
+    keys.forEach((k) => {
+      result.push(values[k]);
+    });
+    return result;
   }
 
   render() {
@@ -47,7 +62,7 @@ class Calculation extends Component {
         key={k}
       >
         {
-          getFieldDecorator(`names[${k}]`, {
+          getFieldDecorator(`values[${k}]`, {
             rules: [
               {
                 required: true,
@@ -55,7 +70,7 @@ class Calculation extends Component {
                 message: '如果不需要该输入框请删除否则请将问题补充好',
               },
             ],
-          })(<TextArea autoSize={{ minRows: 1, maxRows: 3 }} style={{ width: '60%', marginRight: 8 }} />)
+          })(<TextArea autoSize={{ minRows: 1, maxRows: 3 }} style={{ maxWidth: '529px', marginRight: 8 }} />)
         }
         {
           keys.length > 1 ? (
@@ -71,7 +86,7 @@ class Calculation extends Component {
       <Form onSubmit={this.handleSubmit}>
         {formItems}
         <Form.Item>
-          <Button type="dashed" onClick={this.add} style={{ width: '60%' }}>
+          <Button type="dashed" block onClick={this.add} style={{ maxWidth: '529px' }}>
             <Icon type="plus" />
             添加问题
           </Button>

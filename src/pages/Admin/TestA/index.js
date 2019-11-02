@@ -1,24 +1,59 @@
 import React, { PureComponent } from 'react';
 import { Tabs } from 'antd';
 
-import Music from './Music';
-import Calculation from './Calculation';
+import SoundUpload from '../../../components/adminForm/SoundUpload';
+import Calculation from '../../../components/adminForm/Calculation';
+
+import ExperimentService from '../../../server/Experiment';
 
 const { TabPane } = Tabs;
+const TYPENAME = 'test_a';
+
+const SecondQuestionID = '5dbbcff630863b006c34a84a';
 
 class TestA extends PureComponent {
+  state = {
+    id: null,
+    soundUrl: '',
+  }
+
+  componentDidMount() {
+    this.init();
+  }
+
+  init = async () => {
+    const expe = await ExperimentService.getExperimentByType(TYPENAME);
+    if (expe.length === 0) {
+      expe[0] = await ExperimentService.createExperiment(TYPENAME);
+    }
+    this.setState({
+      id: expe[0].id,
+    }, async () => {
+      await this.getSound();
+    });
+  }
+
+  getSound = async () => {
+    const { id } = this.state;
+    const sound = await ExperimentService.getSounUrl(id);
+    this.setState({
+      soundUrl: sound,
+    });
+  }
+
   handleTabChange = () => {
 
   }
 
   render() {
+    const { id, soundUrl } = this.state;
     return (
-      <Tabs defaultActiveKey="1" onChange={this.handleTabChange}>
+      <Tabs defaultActiveKey="2" onChange={this.handleTabChange}>
         <TabPane tab="上传音频" key="1">
-          <Music />
+          <SoundUpload expeID={id} soundUrl={soundUrl} onUpload={this.getSound} />
         </TabPane>
         <TabPane tab="测试2-计算题" key="2">
-          <Calculation />
+          <Calculation questionID={SecondQuestionID} />
         </TabPane>
       </Tabs>
     );
