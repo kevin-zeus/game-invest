@@ -68,6 +68,35 @@ class Experiment {
       throw new Error(error.message);
     }
   }
+
+  /**
+   * 更新音频中说到的单词
+   * @param {String} id 实验的实例对象
+   * @param {Array} words 单词数组
+   */
+  static async setWords(id, words) {
+    try {
+      const Expe = AV.Object.createWithoutData('Experiment', id);
+      Expe.set('words', words);
+      return Expe.save();
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
+
+  /**
+   * 获取音频中的正确单词数组
+   * @param {String} id 实验的实例ID
+   */
+  static async getWords(id) {
+    try {
+      const query = new AV.Query('Experiment');
+      const expe = await query.get(id);
+      return expe.get('words');
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
 }
 
 export default Experiment;

@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Form, Icon, Button, message,
+  Form, Icon, Button, message, Input,
 } from 'antd';
 import styled from 'styled-components';
 import FieldInput from './FieldInput';
@@ -32,11 +32,10 @@ class FormLayout extends React.Component {
   }
 
   init = async () => {
-    const { questionID, form: { getFieldDecorator } } = this.props;
+    const { questionID } = this.props;
     try {
       const formList = await QuestionService.getQuestionList(questionID);
       id = formList.length;
-      getFieldDecorator('keys', { initialValue: formList.map((item, index) => index + 1) });
       this.setState({
         formList,
       });
@@ -101,6 +100,10 @@ class FormLayout extends React.Component {
         Comp = FieldInput;
         break;
       }
+      case Types.INPUT: {
+        Comp = Input;
+        break;
+      }
       default: break;
     }
     return Comp;
@@ -110,9 +113,7 @@ class FormLayout extends React.Component {
     const { formList = [] } = this.state;
     const { form: { getFieldDecorator, getFieldValue }, type } = this.props;
     const Comp = this.switchItem(type);
-    if (formList.length === 0) {
-      getFieldDecorator('keys', { initialValue: [] });
-    }
+    getFieldDecorator('keys', { initialValue: formList.map((item, index) => index + 1) });
     const keys = getFieldValue('keys');
     const formItems = keys.map((k, index) => (
       <FormItem key={k}>

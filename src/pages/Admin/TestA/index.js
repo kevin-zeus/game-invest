@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Tabs } from 'antd';
 
-import TestOne from './TestOne';
 import SoundUpload from '../../../components/adminForm/SoundUpload';
+import FormLayout from '../../../components/adminForm/wordFormLayout';
+
+import TestOne from './TestOne';
 import Calculation from './Calculation';
 
 import ExperimentService from '../../../server/Experiment';
@@ -50,6 +52,7 @@ class TestA extends Component {
       <Tabs defaultActiveKey="2" onChange={this.handleTabChange}>
         <TabPane tab="上传音频" key="1">
           <SoundUpload expeID={id} soundUrl={soundUrl} onUpload={this.getSound} />
+          <FormLayout expeID={id} />
         </TabPane>
         <TabPane tab="测试1-默写题" key="2">
           <TestOne />
