@@ -8,10 +8,14 @@ class File {
    * @param {Function} onprogress
    */
   static async upload(localFile, filename, onprogress) {
-    const file = new AV.File(filename, localFile);
-    return file.save({
-      onprogress,
-    });
+    try {
+      const file = new AV.File(filename, localFile);
+      return file.save({
+        onprogress,
+      });
+    } catch (error) {
+      throw new Error(error.message);
+    }
   }
 }
 

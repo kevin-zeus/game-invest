@@ -9,9 +9,13 @@ class Experiment {
    */
   static async getExperimentByType(type) {
     if (typeConfig[type]) {
-      const query = new AV.Query('Experiment');
-      query.equalTo('type', type);
-      return query.find();
+      try {
+        const query = new AV.Query('Experiment');
+        query.equalTo('type', type);
+        return query.find();
+      } catch (error) {
+        throw new Error(error.message);
+      }
     }
     return null;
   }
@@ -22,11 +26,15 @@ class Experiment {
    */
   static async createExperiment(type) {
     if (typeConfig[type]) {
-      const ExpeObj = await this.getExperimentByType(type);
-      if (ExpeObj.length === 0) {
-        const Expe = new AV.Object('Experiment');
-        Expe.set('type', type);
-        return Expe.save();
+      try {
+        const ExpeObj = await this.getExperimentByType(type);
+        if (ExpeObj.length === 0) {
+          const Expe = new AV.Object('Experiment');
+          Expe.set('type', type);
+          return Expe.save();
+        }
+      } catch (error) {
+        throw new Error(error.message);
       }
     }
     return null;
@@ -38,9 +46,13 @@ class Experiment {
    * @param {File} sound 文件上传后获取的File对象
    */
   static async changeSound(id, sound) {
-    const Expe = AV.Object.createWithoutData('Experiment', id);
-    Expe.set('sound', sound);
-    return Expe.save();
+    try {
+      const Expe = AV.Object.createWithoutData('Experiment', id);
+      Expe.set('sound', sound);
+      return Expe.save();
+    } catch (error) {
+      throw new Error(error.message);
+    }
   }
 
   /**
@@ -48,9 +60,13 @@ class Experiment {
    * @param {String} id 实例的id
    */
   static async getSounUrl(id) {
-    const query = new AV.Query('Experiment');
-    const expe = await query.get(id);
-    return expe.get('sound').get('url');
+    try {
+      const query = new AV.Query('Experiment');
+      const expe = await query.get(id);
+      return expe.get('sound').get('url');
+    } catch (error) {
+      throw new Error(error.message);
+    }
   }
 }
 

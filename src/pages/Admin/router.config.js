@@ -2,7 +2,7 @@ import TestA from './TestA';
 
 export default [
   {
-    menu: '测试A',
+    menu: '认知测试A',
     path: '/teat-a',
     component: TestA,
     icon: 'snippets',

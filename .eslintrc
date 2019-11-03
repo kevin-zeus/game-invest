@@ -31,6 +31,7 @@
     "react/jsx-props-no-spreading": "off", // 关闭props不能使用展开符展开的限制
     "no-debugger": "off",
     "react/sort-comp": "off",
-    "linebreak-style": [0 ,"error", "windows"] // 允许windows的CRLF换行符
+    "linebreak-style": [0 ,"error", "windows"], // 允许windows的CRLF换行符
+    "no-console": ["error", { "allow": ["warn", "error"] }]
   }
 }

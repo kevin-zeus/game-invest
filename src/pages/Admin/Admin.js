@@ -59,6 +59,10 @@ class Admin extends PureComponent {
     }
   }
 
+  handleMenuChange = (item) => {
+    console.log(item);
+  }
+
   render() {
     const { collapsed } = this.state;
     const LogoDiv = styled.div`
@@ -74,7 +78,7 @@ class Admin extends PureComponent {
       <Layout style={{ height: '100%' }}>
         <Sider trigger={null} collapsible collapsed={collapsed}>
           <LogoDiv>投资小游戏</LogoDiv>
-          <Menu theme="dark" mode="inline" defaultSelectedKeys={[routerConfig[0].path]}>
+          <Menu theme="dark" onClick={this.handleMenuChange} mode="inline" defaultSelectedKeys={[routerConfig[0].path]}>
             {
               routerConfig.map((item) => (
                 <Menu.Item key={item.path}>
