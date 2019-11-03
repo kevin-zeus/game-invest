@@ -1,21 +1,20 @@
 import React, { Component } from 'react';
 import { Tabs } from 'antd';
 
-import SoundUpload from '../../../components/adminForm/SoundUpload';
-import FormLayout from '../../../components/adminForm/wordFormLayout';
-
 import TestOne from './TestOne';
 import TestTwo from './TestTwo';
 import TestThree from './TestThree';
 import TestFour from './TestFour';
+import SoundUpload from '../../../components/adminForm/SoundUpload';
+import FormLayout from '../../../components/adminForm/wordFormLayout';
 // import Calculation from './Calculation';
 
 import ExperimentService from '../../../server/Experiment';
 
 const { TabPane } = Tabs;
-const TYPENAME = 'test_a';
+const TYPENAME = 'test_b';
 
-class TestA extends Component {
+class TestB extends Component {
   state = {
     id: null,
     soundUrl: '',
@@ -74,4 +73,4 @@ class TestA extends Component {
   }
 }
 
-export default TestA;
+export default TestB;

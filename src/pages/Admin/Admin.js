@@ -59,10 +59,6 @@ class Admin extends PureComponent {
     }
   }
 
-  handleMenuChange = (item) => {
-    console.log(item);
-  }
-
   render() {
     const { collapsed } = this.state;
     const LogoDiv = styled.div`
