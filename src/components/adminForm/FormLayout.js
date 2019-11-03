@@ -23,6 +23,28 @@ const IconWrap = styled(Icon)`
 const FormItem = Form.Item;
 
 class FormLayout extends React.Component {
+  state = {
+    formList: [],
+  }
+
+  componentDidMount() {
+    this.init();
+  }
+
+  init = async () => {
+    const { questionID, form: { getFieldDecorator } } = this.props;
+    try {
+      const formList = await QuestionService.getQuestionList(questionID);
+      id = formList.length;
+      getFieldDecorator('keys', { initialValue: formList.map((item, index) => index + 1) });
+      this.setState({
+        formList,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   remove = (k) => {
     const { form } = this.props;
     const keys = form.getFieldValue('keys');
@@ -85,13 +107,17 @@ class FormLayout extends React.Component {
   }
 
   render() {
+    const { formList = [] } = this.state;
     const { form: { getFieldDecorator, getFieldValue }, type } = this.props;
     const Comp = this.switchItem(type);
-    getFieldDecorator('keys', { initialValue: [] });
+    if (formList.length === 0) {
+      getFieldDecorator('keys', { initialValue: [] });
+    }
     const keys = getFieldValue('keys');
-    const formItems = keys.map((k) => (
+    const formItems = keys.map((k, index) => (
       <FormItem key={k}>
         {getFieldDecorator(`names[${k}]`, {
+          initialValue: formList[index],
         })(<Comp />)}
         {keys.length > 1 ? (
           <IconWrap
