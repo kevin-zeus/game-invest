@@ -9,6 +9,8 @@ import Login from './Login';
 
 import UserService from '../../server/User';
 
+import RouterConfig from '../Experiment/router';
+
 const Wrap = styled.div`
   @media screen and (min-width: 800px) {
     min-height: 100%;
@@ -36,6 +38,11 @@ class HomeRoot extends Component {
           <Route path="/" exact component={Home} />
           <Route path="/register" exact component={Register} />
           <Route path="/login" exact component={Login} />
+          {
+            RouterConfig.map((route) => (
+              <Route key={route.path} path={route.path} component={route.component} />
+            ))
+          }
         </Switch>
         <Footer {...this.props} />
       </Wrap>

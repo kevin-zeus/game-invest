@@ -17,6 +17,7 @@ class FieldInput extends Component {
   state = { // 用来保存所有的该表单项数据
     field: null,
     title: null,
+    answer: null,
   }
 
   componentDidMount() {
@@ -43,18 +44,17 @@ class FieldInput extends Component {
   }
 
   init = () => {
-    const { value: val = { field: '', title: '' } } = this.props;
-    const { field, title } = val;
+    const { value: val = { field: '', title: '', answer: '' } } = this.props;
     this.setState({
-      field,
-      title,
+      ...val,
     }, () => {
       this.emitChange();
     });
   }
 
   render() {
-    const { field, title } = this.state;
+    const { withAnswer = true } = this.props;
+    const { field, title, answer } = this.state;
     return (
       <List bordered column={3} size="small">
         <Item>
@@ -76,6 +76,19 @@ class FieldInput extends Component {
             onChange={(e) => this.handleChange(e, 'title')}
           />
         </Item>
+        {
+          withAnswer && (
+            <Item>
+              <span>答案：</span>
+              <Input
+                value={answer}
+                placeholder="请输入答案"
+                style={{ maxWidth: '120px' }}
+                onChange={(e) => this.handleChange(e, 'answer')}
+              />
+            </Item>
+          )
+        }
       </List>
     );
   }

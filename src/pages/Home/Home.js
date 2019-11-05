@@ -3,6 +3,7 @@ import { Layout, List, Button } from 'antd';
 import styled from 'styled-components';
 
 import shaizi from '../../assets/shaizi.svg';
+import RouterConfig from '../Experiment/router';
 
 const { Content } = Layout;
 const WrapLayout = styled(Layout)`
@@ -27,26 +28,6 @@ const ListBox = styled.div`
   padding: 30px 20px;
 `;
 
-
-const games = [
-  {
-    title: '1、风险偏好测试',
-    path: '1',
-  },
-  {
-    title: '2、亲社会偏好测试',
-    path: '2',
-  },
-  {
-    title: '3、情绪调查',
-    path: '3',
-  },
-  {
-    title: '4、认知测试',
-    path: '4',
-  },
-];
-
 class Home extends Component {
   navigateTo = (path) => {
     const { history } = this.props;
@@ -64,7 +45,7 @@ class Home extends Component {
             </ImgBox>
             <ListBox>
               <List
-                dataSource={games}
+                dataSource={RouterConfig}
                 renderItem={(item) => (
                   <List.Item
                     actions={[
@@ -75,7 +56,7 @@ class Home extends Component {
                         开始测试
                       </Button>]}
                   >
-                    {item.title}
+                    {item.name}
                   </List.Item>
                 )}
               />

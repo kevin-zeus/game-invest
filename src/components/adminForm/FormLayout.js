@@ -111,7 +111,7 @@ class FormLayout extends React.Component {
 
   render() {
     const { formList = [] } = this.state;
-    const { form: { getFieldDecorator, getFieldValue }, type } = this.props;
+    const { form: { getFieldDecorator, getFieldValue }, type, attr } = this.props;
     const Comp = this.switchItem(type);
     getFieldDecorator('keys', { initialValue: formList.map((item, index) => index + 1) });
     const keys = getFieldValue('keys');
@@ -119,7 +119,7 @@ class FormLayout extends React.Component {
       <FormItem key={k}>
         {getFieldDecorator(`names[${k}]`, {
           initialValue: formList[index],
-        })(<Comp />)}
+        })(<Comp {...attr} />)}
         {keys.length > 1 ? (
           <IconWrap
             type="close-circle"
