@@ -2,4 +2,5 @@
 export default {
   test_a: true,
   test_b: true,
+  emotion: true,
 };
