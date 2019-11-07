@@ -4,11 +4,11 @@ import { Tabs } from 'antd';
 import SoundUpload from '../../../components/adminForm/SoundUpload';
 import FormLayout from '../../../components/adminForm/wordFormLayout';
 
+import ExportExcel from './ExportExcel';
 import TestOne from './TestOne';
 import TestTwo from './TestTwo';
 import TestThree from './TestThree';
 import TestFour from './TestFour';
-// import Calculation from './Calculation';
 
 import ExperimentService from '../../../server/Experiment';
 
@@ -52,7 +52,10 @@ class TestA extends Component {
   render() {
     const { id, soundUrl } = this.state;
     return (
-      <Tabs defaultActiveKey="2" onChange={this.handleTabChange}>
+      <Tabs defaultActiveKey="0" onChange={this.handleTabChange}>
+        <TabPane tab="导出数据" key="0">
+          <ExportExcel expeID={id} />
+        </TabPane>
         <TabPane tab="上传音频" key="1">
           <SoundUpload expeID={id} soundUrl={soundUrl} onUpload={this.getSound} />
           <FormLayout expeID={id} />

@@ -39,7 +39,7 @@ class Result {
     }
   }
 
-  static async getResult(expeID) {
+  static async getCurrentUserResult(expeID) {
     try {
       const User = AV.User.current();
 
@@ -56,6 +56,37 @@ class Result {
       }
       const data = result[0];
       return data.get('resultList');
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
+
+  static async getAllResult(expeID) {
+    try {
+      const Experiment = new AV.Query('Experiment');
+      const expe = await Experiment.get(expeID);
+
+      const res = new AV.Query('Result');
+      res.equalTo('experiment', expe);
+      res.include('user');
+      const result = await res.find();
+
+      if (result) {
+        const data = result.map((r) => {
+          const arr = r.get('resultList');
+          const name = r.get('user').get('realName');
+          const o = {};
+          o['姓名'] = name;
+          arr.unshift(o);
+          return arr;
+        });
+        const cleanData = data.map((item) => {
+          const temp = item.reduce((pre, cur) => Object.assign(pre, cur), {});
+          return temp;
+        });
+        return cleanData;
+      }
+      return null;
     } catch (error) {
       throw new Error(error.message);
     }
