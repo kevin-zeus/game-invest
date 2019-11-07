@@ -11,6 +11,9 @@ class TestOne extends PureComponent {
         type={types.ADMIN_FIELD_INPUT}
         questionID={questionID}
         max={20}
+        attr={{
+          withAnswer: false,
+        }}
       />
     );
   }

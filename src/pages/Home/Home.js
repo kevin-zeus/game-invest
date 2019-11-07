@@ -1,9 +1,12 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import React, { Component } from 'react';
 import { Layout, List, Button } from 'antd';
 import styled from 'styled-components';
 
 import shaizi from '../../assets/shaizi.svg';
 import RouterConfig from '../Experiment/router';
+
+import UserService from '../../server/User';
 
 const { Content } = Layout;
 const WrapLayout = styled(Layout)`
@@ -29,12 +32,28 @@ const ListBox = styled.div`
 `;
 
 class Home extends Component {
+  state = {
+    user: null,
+  }
+
   navigateTo = (path) => {
     const { history } = this.props;
     history.push(path);
   }
 
+  componentDidMount() {
+    this.init();
+  }
+
+  init = () => {
+    const user = UserService.getCurrentUser();
+    this.setState({
+      user: user.attributes,
+    });
+  }
+
   render() {
+    const { user } = this.state;
     return (
       <div>
         <WrapLayout>
@@ -43,6 +62,15 @@ class Home extends Component {
             <ImgBox>
               <img src={shaizi} alt="骰子" />
             </ImgBox>
+            {
+              user && (
+                <div style={{ textAlign: 'center' }}>
+                  <p>学生信息</p>
+                  <p>姓名：{user.realName}</p>
+                  <p>学号：{user.username}</p>
+                </div>
+              )
+            }
             <ListBox>
               <List
                 dataSource={RouterConfig}

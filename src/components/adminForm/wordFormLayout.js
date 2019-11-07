@@ -38,8 +38,11 @@ class WordFormLayout extends Component {
     form.validateFields(async (err, values) => {
       if (!err) {
         const { names } = values;
-        let result = keys.map((key) => names[key]);
-        result = result.filter((item) => item);
+        let result = keys.map((key) => {
+          const item = `${names[key]}`.trim();
+          return item;
+        });
+        result = result.filter((item) => item !== 'undefined');
         try {
           await ExperimentService.setWords(expeID, result);
           message.success('更新/保存成功');
@@ -62,6 +65,10 @@ class WordFormLayout extends Component {
               {
                 getFieldDecorator(`names[${k}]`, {
                   initialValue: formList[i],
+                  rules: [{
+                    required: true,
+                    message: '必填',
+                  }],
                 })(
                   <Input style={{ width: 80 }} />
                 )
