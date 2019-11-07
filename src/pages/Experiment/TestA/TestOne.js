@@ -24,7 +24,7 @@ class TestOne extends Component {
     canPlay: true,
     formList: null,
     words: null,
-    senconds: 10, // 倒计时120秒
+    senconds: 120, // 倒计时120秒
     disabled: false, // 是否禁用表单项
     hideFormSubmitBtn: false,
   }
