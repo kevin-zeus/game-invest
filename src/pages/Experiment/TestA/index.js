@@ -81,7 +81,7 @@ class TestA extends Component {
     } = this.state;
     return (
       <Wrap>
-        <h1>认知测试A</h1>
+        <h1>实验一</h1>
         <div>
           {
             configs.map((item, i) => (

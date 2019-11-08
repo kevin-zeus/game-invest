@@ -47,9 +47,11 @@ class Home extends Component {
 
   init = () => {
     const user = UserService.getCurrentUser();
-    this.setState({
-      user: user.attributes,
-    });
+    if (user) {
+      this.setState({
+        user: user.attributes,
+      });
+    }
   }
 
   render() {
@@ -68,6 +70,7 @@ class Home extends Component {
                   <p>学生信息</p>
                   <p>姓名：{user.realName}</p>
                   <p>学号：{user.username}</p>
+                  <p>学校：{user.school}</p>
                 </div>
               )
             }
@@ -81,7 +84,7 @@ class Home extends Component {
                         type="link"
                         onClick={() => { this.navigateTo(item.path); }}
                       >
-                        开始测试
+                        开始实验
                       </Button>]}
                   >
                     {item.name}

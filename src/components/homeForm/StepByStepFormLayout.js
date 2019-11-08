@@ -10,6 +10,11 @@ class StepByStepFormLayout extends Component {
     btnMsg: '下一题',
   }
 
+  constructor(props) {
+    super(props);
+    count = 0;
+  }
+
   handleChange = (e, i) => {
     const { value: val } = e.target;
     const { value } = this.state;

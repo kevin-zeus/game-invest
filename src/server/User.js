@@ -28,11 +28,14 @@ class User {
    * 提醒甲方，如果有同名同姓的人记得在用户名上面区分一下
    */
   static register(params) {
-    const { username, password, realname } = params;
+    const {
+      username, password, realname, school,
+    } = params;
     const user = new AV.User();
     user.setUsername(username);
     user.setPassword(password);
     user.set('realName', realname);
+    user.set('school', school);
     return user.signUp();
   }
 

@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Form, Input, Icon, Button, message,
+  Form, Input, Icon, Button, message, Select,
 } from 'antd';
 import styled from 'styled-components';
 
 import UserService from '../../server/User';
 
 const FormItem = Form.Item;
+const { Option } = Select;
 
 const WrapDiv = styled.div`
   width: 100%;
@@ -72,14 +73,29 @@ class Register extends Component {
               getFieldDecorator('username', {
                 rules: [
                   { required: true, message: '请输入学号' },
-                  { pattern: /^[0-9]*$/, message: '学号应该为纯数字' },
-                  { len: 12, message: '学号应该为12位' },
                 ],
               })(
                 <Input
                   prefix={<Icon type="contacts" style={{ color: 'rgba(0,0,0,.25)' }} />}
                   placeholder="请输入你的学号"
                 />
+              )
+            }
+          </FormItem>
+          <FormItem label="学校">
+            {
+              getFieldDecorator('school', {
+                rules: [
+                  { required: true, message: '学校名称不能为空' },
+                ],
+              })(
+                <Select
+                  prefix={<Icon type="bank" style={{ color: 'rgba(0,0,0,.25' }} />}
+                  placeholder="请输入你的学校名称"
+                >
+                  <Option value="西南民族大学">西南民族大学</Option>
+                  <Option value="中南财经政法大学">中南财经政法大学</Option>
+                </Select>
               )
             }
           </FormItem>

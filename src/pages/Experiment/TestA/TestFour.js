@@ -19,14 +19,15 @@ class TestFour extends Component {
     isDisabled: false,
   }
 
-  componentWillReceiveProps() {
+  componentDidMount() {
     this.init();
   }
 
   init = async () => {
     beginTime = moment().format('YYYY-MM-DD HH:mm:ss');
-    const { expeID } = this.props;
+    const { expeID, hideBtn } = this.props;
     try {
+      hideBtn();
       const formList = await QuestionService.getQuestionList(questionID);
       const words = await ExperimentService.getWords(expeID);
       this.setState({
@@ -47,12 +48,12 @@ class TestFour extends Component {
         this.setState({
           isDisabled: true,
         });
-        message.success('提交成功');
+        message.success('你已完成该实验，谢谢参与');
       } catch (error) {
         console.error(error);
       }
     }
-    showBtn('结束测试');
+    showBtn('结束实验');
   }
 
   render() {

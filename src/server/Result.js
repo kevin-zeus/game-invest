@@ -25,7 +25,7 @@ class Result {
       tempObj[`${prev}_begintime`] = beginTime;
       tempObj[`${prev}_endtime`] = endTime;
       const spanTime = moment(endTime) - moment(beginTime);
-      tempObj[`${prev}_timespan`] = moment(spanTime).format('HH:mm:ss');
+      tempObj[`${prev}_timespan`] = moment(spanTime).format('mm:ss');
 
 
       result.set('user', User);
@@ -75,8 +75,12 @@ class Result {
         const data = result.map((r) => {
           const arr = r.get('resultList');
           const name = r.get('user').get('realName');
+          const schoolID = r.get('user').get('username');
+          const school = r.get('user').get('school');
           const o = {};
           o['姓名'] = name;
+          o['学号'] = schoolID;
+          o['学校'] = school;
           arr.unshift(o);
           return arr;
         });
