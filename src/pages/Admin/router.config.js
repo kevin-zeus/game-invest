@@ -1,6 +1,7 @@
 import TestA from './TestA';
 import TestB from './TestB';
 import Emotion from './Emotion';
+import Society from './Society';
 
 export default [
   {
@@ -19,6 +20,12 @@ export default [
     menu: '情绪问卷调查',
     path: '/emotion',
     component: Emotion,
+    icon: 'snippets',
+  },
+  {
+    menu: '亲社会实验',
+    path: '/society',
+    component: Society,
     icon: 'snippets',
   },
 ];
