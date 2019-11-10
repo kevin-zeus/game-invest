@@ -44,8 +44,6 @@ class Login extends Component {
               getFieldDecorator('username', {
                 rules: [
                   { required: true, message: '请输入学号' },
-                  { pattern: /^[0-9]*$/, message: '学号应该为纯数字' },
-                  { len: 12, message: '学号应该为12位' },
                 ],
               })(
                 <Input
