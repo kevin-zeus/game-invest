@@ -21,6 +21,33 @@ class Experiment {
   }
 
   /**
+   * 获取当前开启的测试
+   */
+  static async getAllExperiment() {
+    try {
+      const query = new AV.Query('Experiment');
+      return query.find();
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
+
+  /**
+   * 设置是否开启某个实验
+   * @param {String} id Experiment实例的ID号
+   * @param {Boolean} status isStart的状态
+   */
+  static async setIsStartByID(id, status) {
+    try {
+      const Expe = AV.Object.createWithoutData('Experiment', id);
+      Expe.set('isStart', status);
+      return Expe.save();
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
+
+  /**
    * 创建一个新的测试
    * @param {String} type 测试的类型
    */

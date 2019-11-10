@@ -6,13 +6,13 @@ import configs from './test.config';
 import ExperimentService from '../../../server/Experiment';
 import ResultService from '../../../server/Result'; // 获取step限制已经填过的内容不可再填
 
-const TYPENAME = 'test_a';
+const TYPENAME = 'test_b';
 
 const Wrap = styled.div`
   padding: 20px 16px;
 `;
 
-class TestA extends Component {
+class TestB extends Component {
   state = {
     btnMsg: '',
     index: 0,
@@ -85,7 +85,7 @@ class TestA extends Component {
     } = this.state;
     return (
       <Wrap>
-        <h1>实验A</h1>
+        <h1>实验B</h1>
         <div>
           {
             configs.map((item, i) => (
@@ -118,4 +118,4 @@ class TestA extends Component {
   }
 }
 
-export default TestA;
+export default TestB;

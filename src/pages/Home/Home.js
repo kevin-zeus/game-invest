@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, { Component } from 'react';
 import { Layout, List, Button } from 'antd';
@@ -7,6 +8,7 @@ import shaizi from '../../assets/shaizi.svg';
 import RouterConfig from '../Experiment/router';
 
 import UserService from '../../server/User';
+import ExperimentService from '../../server/Experiment';
 
 const { Content } = Layout;
 const WrapLayout = styled(Layout)`
@@ -34,6 +36,7 @@ const ListBox = styled.div`
 class Home extends Component {
   state = {
     user: null,
+    expeStartList: null,
   }
 
   navigateTo = (path) => {
@@ -41,8 +44,9 @@ class Home extends Component {
     history.push(path);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.init();
+    await this.setExpeList();
   }
 
   init = () => {
@@ -54,8 +58,22 @@ class Home extends Component {
     }
   }
 
+  setExpeList = async () => {
+    const expeList = await ExperimentService.getAllExperiment();
+    const types = expeList.map((r) => ([
+      r.get('type'), r.get('isStart'),
+    ]));
+    const tempObj = {};
+    types.forEach((i) => {
+      tempObj[i[0]] = i[1];
+    });
+    this.setState({
+      expeStartList: tempObj,
+    });
+  }
+
   render() {
-    const { user } = this.state;
+    const { user, expeStartList } = this.state;
     return (
       <div>
         <WrapLayout>
@@ -74,24 +92,29 @@ class Home extends Component {
                 </div>
               )
             }
-            <ListBox>
-              <List
-                dataSource={RouterConfig}
-                renderItem={(item) => (
-                  <List.Item
-                    actions={[
-                      <Button
-                        type="link"
-                        onClick={() => { this.navigateTo(item.path); }}
+            {
+              expeStartList && (
+                <ListBox>
+                  <List
+                    dataSource={RouterConfig}
+                    renderItem={(item) => (
+                      <List.Item
+                        actions={[
+                          <Button
+                            type="link"
+                            onClick={() => { this.navigateTo(item.path); }}
+                            disabled={!expeStartList[item.type]}
+                          >
+                            开始实验
+                          </Button>]}
                       >
-                        开始实验
-                      </Button>]}
-                  >
-                    {item.name}
-                  </List.Item>
-                )}
-              />
-            </ListBox>
+                        {item.name}
+                      </List.Item>
+                    )}
+                  />
+                </ListBox>
+              )
+            }
           </Content>
         </WrapLayout>
       </div>

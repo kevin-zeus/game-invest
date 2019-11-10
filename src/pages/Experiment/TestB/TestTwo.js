@@ -4,16 +4,15 @@ import moment from 'moment';
 
 import QuestionService from '../../../server/Question';
 import ResultService from '../../../server/Result';
+import StepLayout from '../../../components/homeForm/StepByStepFormLayout';
 
-import FormLayout from '../../../components/homeForm/StepByStepFormLayout';
-
-const questionID = '5dbe839512215f0091d51d70';
+const questionID = '5dbe77a612215f0091d50ff4';
 let beginTime = null;
 let endTime = null;
 
-class TestThree extends Component {
+class TestTwo extends Component {
   state = {
-    formList: [],
+    formList: null,
     isDisabled: false,
   }
 
@@ -37,10 +36,8 @@ class TestThree extends Component {
 
   handleSubmit = async (value) => {
     endTime = moment().format('YYYY-MM-DD HH:mm:ss');
-
     const { showBtn, expeID } = this.props;
-    await ResultService.addResult(expeID, value, 3, { beginTime, endTime });
-
+    await ResultService.addResult(expeID, value, 2, { beginTime, endTime });
     this.setState({
       isDisabled: true,
     });
@@ -49,11 +46,10 @@ class TestThree extends Component {
   }
 
   render() {
-    const { isDisabled, formList } = this.state;
+    const { formList, isDisabled } = this.state;
     return (
       <Card>
-        <p>在小测试3中，会给出一行数字，其中有一位是空白的。请从左往右观察这些数字，然后在下划线部分填出空白处应有的数字。 同样做对一道题给予0.5元钱报酬。</p>
-        <FormLayout
+        <StepLayout
           isDisabled={isDisabled}
           onSubmit={this.handleSubmit}
           formList={formList}
@@ -63,4 +59,4 @@ class TestThree extends Component {
   }
 }
 
-export default TestThree;
+export default TestTwo;

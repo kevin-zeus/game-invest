@@ -2,6 +2,8 @@ import TestA from './TestA';
 import TestB from './TestB';
 import Emotion from './Emotion';
 
+import Setting from './Setting';
+
 export default [
   {
     menu: '认知测试A',
@@ -20,5 +22,11 @@ export default [
     path: '/emotion',
     component: Emotion,
     icon: 'snippets',
+  },
+  {
+    menu: '设置',
+    path: '/setting',
+    component: Setting,
+    icon: 'setting',
   },
 ];
