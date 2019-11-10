@@ -3,17 +3,18 @@ import TestB from './TestB';
 import Emotion from './Emotion';
 
 import Setting from './Setting';
+import Society from './Society';
 
 export default [
   {
     menu: '认知测试A',
-    path: '/test-a',
+    path: '/text-a',
     component: TestA,
     icon: 'snippets',
   },
   {
     menu: '认知测试B',
-    path: '/test-b',
+    path: '/text-b',
     component: TestB,
     icon: 'snippets',
   },
@@ -28,5 +29,11 @@ export default [
     path: '/setting',
     component: Setting,
     icon: 'setting',
+  },
+  {
+    menu: '亲社会实验',
+    path: '/society',
+    component: Society,
+    icon: 'snippets',
   },
 ];

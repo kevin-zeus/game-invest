@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { Tabs } from 'antd';
-import TestOne from './TestOne';
-
-
 import ExperimentService from '../../../server/Experiment';
+import TestOne from './TestOne';
 
 const { TabPane } = Tabs;
 const TYPENAME = 'emotion';
