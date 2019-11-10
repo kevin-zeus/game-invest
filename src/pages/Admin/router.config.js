@@ -1,7 +1,6 @@
 import TestA from './TestA';
 import TestB from './TestB';
 import Emotion from './Emotion';
-
 import Setting from './Setting';
 import Society from './Society';
 
