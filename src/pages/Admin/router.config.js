@@ -24,15 +24,15 @@ export default [
     icon: 'snippets',
   },
   {
-    menu: '设置',
-    path: '/setting',
-    component: Setting,
-    icon: 'setting',
-  },
-  {
     menu: '亲社会实验',
     path: '/society',
     component: Society,
     icon: 'snippets',
+  },
+  {
+    menu: '设置',
+    path: '/setting',
+    component: Setting,
+    icon: 'setting',
   },
 ];
