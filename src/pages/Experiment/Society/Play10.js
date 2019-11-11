@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import { Card, Modal, message } from 'antd';
+import { Card, message, Modal } from 'antd';
 
 import QuestionService from '../../../server/Question';
 import ResultService from '../../../server/Result';
 import FormLayout from '../../../components/homeForm/FormLayout';
 import FormTypes from '../../../components/homeForm/formItemTypes';
 
-const questionID = '5dc1386ea91c9300939d9ba4';
-const money = 20;
-const step = 1;
+const questionID = '5dc138b712215f0091d7d680';
+const money = 200;
+const step = 10;
 
-class Play1 extends Component {
+class Play10 extends Component {
   state = {
     disabled: false,
     formList: null,
@@ -21,6 +21,9 @@ class Play1 extends Component {
   }
 
   init = async () => {
+    const { hideBtn } = this.props;
+    hideBtn();
+
     const no = Math.floor(Math.random() * 100);
     const formList = await QuestionService.getQuestionList(questionID);
     let title = formList[0].title || '';
@@ -37,26 +40,31 @@ class Play1 extends Component {
     const { expeID, showBtn } = this.props;
     const { formList } = this.state;
     const { field } = formList[0];
+    const val = { ...values[field] }; // {guessValue, value}
 
-    if (+values[field] < 0 || +values[field] > money || !values[field]) {
-      message.error('金额不能为空且必须为0~200的数字');
-      return;
-    }
+    const tempObj = {};
+    const otherRealValue = Math.floor(Math.random() * 20); // 服务器模拟的对方真实值
+    let { value, guessValue } = val;
+    value = parseInt(value, 10);
+    guessValue = parseInt(guessValue, 10);
 
-    const value = {};
-    value[field] = parseInt(value[field], 10);
+    tempObj[`${field}${step}_10times`] = value; // 玩家填的值
+    tempObj[`${field}${step}_guess_10times`] = guessValue; // 玩家猜测的值
+    tempObj[`${field}${step}_computer_10times`] = otherRealValue; // 服务器模拟的值
+    tempObj[`${field}${step}_payoff_10times`] = 0.8 * (value + otherRealValue) + (20 - value); // 玩家收益
+    tempObj[`${field}${step}_guess_payoff_10times`] = 20 - Math.abs(guessValue - otherRealValue); // 玩家猜测收益
+
+    tempObj[`${field}${step}_payoff_10times`] = tempObj[`${field}${step}_payoff_10times`].toFixed(2);
+    tempObj[`${field}${step}_guess_payoff_10times`] = tempObj[`${field}${step}_guess_payoff_10times`].toFixed(2);
 
     Modal.confirm({
       title: '提示',
-      content: `你的分享钱数是${values[field]}，是否确定？`,
+      content: `请确认猜测服务器投入金额${guessValue}元，你的投入额为${value}元`,
       okText: '确认提交',
       cancelText: '返回重填',
       onOk: async () => {
         try {
-          // 计算玩家收益 20-value
-          value[`${field}_payoff`] = money - value[field];
-
-          await ResultService.addResult(expeID, value, step);
+          await ResultService.addResult(expeID, tempObj, step);
           message.success('提交成功');
           this.setState({
             disabled: true,
@@ -73,16 +81,21 @@ class Play1 extends Component {
     const { disabled, formList } = this.state;
     return (
       <Card>
-        <h3>游戏一</h3>
+        <h3>游戏十</h3>
         <FormLayout
           isDisabled={disabled}
           onSubmit={this.handleSubmit}
-          type={FormTypes.INPUT}
+          type={FormTypes.DOUBLE_INPUT}
           formList={formList}
           titleIsHtml
           withConfirm={false}
           attr={{
             disabled,
+            labels: [
+              '猜测服务器投入金额',
+              '你的投入金额',
+            ],
+            money,
           }}
         />
       </Card>
@@ -90,4 +103,4 @@ class Play1 extends Component {
   }
 }
 
-export default Play1;
+export default Play10;

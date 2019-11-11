@@ -7,10 +7,10 @@ import FormLayout from '../../../components/homeForm/FormLayout';
 import FormTypes from '../../../components/homeForm/formItemTypes';
 
 const questionID = '5dc138a812215f0091d7d67e';
-const money = 20;
-const step = 3;
+const money = 200;
+const step = 9;
 
-class Play3 extends Component {
+class Play9 extends Component {
   state = {
     disabled: false,
     formList: null,
@@ -61,14 +61,14 @@ class Play3 extends Component {
     value = parseInt(value, 10);
     guessValue = parseInt(guessValue, 10);
 
-    tempObj[`${field}${step}`] = value; // 玩家填的值
-    tempObj[`${field}${step}_guess`] = guessValue; // 玩家猜测的值
-    tempObj[`${field}${step}_computer`] = otherRealValue; // 服务器模拟的值
-    tempObj[`${field}${step}_payoff`] = 0.8 * (value + otherRealValue) + (20 - value); // 玩家收益
-    tempObj[`${field}${step}_guess_payoff`] = 20 - Math.abs(guessValue - otherRealValue); // 玩家猜测收益
+    tempObj[`${field}${step}_10times`] = value; // 玩家填的值
+    tempObj[`${field}${step}_guess_10times`] = guessValue; // 玩家猜测的值
+    tempObj[`${field}${step}_computer_10times`] = otherRealValue; // 服务器模拟的值
+    tempObj[`${field}${step}_payoff_10times`] = 0.8 * (value + otherRealValue) + (20 - value); // 玩家收益
+    tempObj[`${field}${step}_guess_payoff_10times`] = 20 - Math.abs(guessValue - otherRealValue); // 玩家猜测收益
 
-    tempObj[`${field}${step}_payoff`] = tempObj[`${field}${step}_payoff`].toFixed(2);
-    tempObj[`${field}${step}_guess_payoff`] = tempObj[`${field}${step}_guess_payoff`].toFixed(2);
+    tempObj[`${field}${step}_payoff_10times`] = tempObj[`${field}${step}_payoff_10times`].toFixed(2);
+    tempObj[`${field}${step}_guess_payoff_10times`] = tempObj[`${field}${step}_guess_payoff_10times`].toFixed(2);
 
     Modal.confirm({
       title: '提示',
@@ -94,7 +94,7 @@ class Play3 extends Component {
     const { disabled, formList } = this.state;
     return (
       <Card>
-        <h3>游戏三</h3>
+        <h3>游戏九</h3>
         <FormLayout
           isDisabled={disabled}
           onSubmit={this.handleSubmit}
@@ -116,4 +116,4 @@ class Play3 extends Component {
   }
 }
 
-export default Play3;
+export default Play9;

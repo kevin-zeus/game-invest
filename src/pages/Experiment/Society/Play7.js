@@ -7,10 +7,10 @@ import FormLayout from '../../../components/homeForm/FormLayout';
 import FormTypes from '../../../components/homeForm/formItemTypes';
 
 const questionID = '5dc1386ea91c9300939d9ba4';
-const money = 20;
-const step = 1;
+const money = 200;
+const step = 7;
 
-class Play1 extends Component {
+class Play7 extends Component {
   state = {
     disabled: false,
     formList: null,
@@ -21,6 +21,9 @@ class Play1 extends Component {
   }
 
   init = async () => {
+    const { hideBtn } = this.props;
+    hideBtn();
+
     const no = Math.floor(Math.random() * 100);
     const formList = await QuestionService.getQuestionList(questionID);
     let title = formList[0].title || '';
@@ -43,8 +46,8 @@ class Play1 extends Component {
       return;
     }
 
-    const value = {};
-    value[field] = parseInt(value[field], 10);
+    const value = [];
+    value[`${field}_10times`] = parseInt(value[field], 10);
 
     Modal.confirm({
       title: '提示',
@@ -54,7 +57,7 @@ class Play1 extends Component {
       onOk: async () => {
         try {
           // 计算玩家收益 20-value
-          value[`${field}_payoff`] = money - value[field];
+          value[`${field}_payoff_10times`] = money - value[field];
 
           await ResultService.addResult(expeID, value, step);
           message.success('提交成功');
@@ -73,7 +76,7 @@ class Play1 extends Component {
     const { disabled, formList } = this.state;
     return (
       <Card>
-        <h3>游戏一</h3>
+        <h3>游戏七</h3>
         <FormLayout
           isDisabled={disabled}
           onSubmit={this.handleSubmit}
@@ -90,4 +93,4 @@ class Play1 extends Component {
   }
 }
 
-export default Play1;
+export default Play7;

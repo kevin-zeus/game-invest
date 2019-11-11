@@ -23,11 +23,11 @@ class DoubleInput extends Component {
   handleChange = (e, type) => {
     const { labels, money } = this.props;
     const { value } = e.target;
+    if (+value < 0 || +value > money) {
+      message.error('金额不能为空且必须为0~200的数字');
+      return;
+    }
     if (type === 'guess') {
-      if (+value < 0 || +value > money) {
-        message.error(`输入的值不能少于0或大于${money}`);
-        return;
-      }
       this.setState({
         guessValue: value.trim(),
       }, () => {
@@ -41,14 +41,10 @@ class DoubleInput extends Component {
         message.error(`请先填写${labels[0]}`);
         return;
       }
-      if (+value < 0 || +value > money) {
-        message.error(`输入的值不能少于0或大于${money}`);
-        return;
-      }
       this.setState({
         value: value.trim(),
       }, () => {
-        this.emitChange();
+        this.emitChange(value);
       });
     }
   }
