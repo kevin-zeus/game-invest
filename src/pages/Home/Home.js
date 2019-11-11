@@ -1,7 +1,9 @@
 /* eslint-disable prefer-destructuring */
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, { Component } from 'react';
-import { Layout, List, Button } from 'antd';
+import {
+  Layout, List, Button, Card,
+} from 'antd';
 import styled from 'styled-components';
 
 import shaizi from '../../assets/shaizi.svg';
@@ -84,12 +86,12 @@ class Home extends Component {
             </ImgBox>
             {
               user && (
-                <div style={{ textAlign: 'center' }}>
-                  <p>学生信息</p>
+                <Card style={{ margin: '0 20px' }}>
+                  <h3>请查阅您的信息</h3>
                   <p>姓名：{user.realName}</p>
                   <p>学号：{user.username}</p>
                   <p>学校：{user.school}</p>
-                </div>
+                </Card>
               )
             }
             {

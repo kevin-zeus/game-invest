@@ -1,5 +1,6 @@
 import TestA from './TestA';
 import TestB from './TestB';
+import Society from './Society';
 
 export default [
   {
@@ -13,5 +14,11 @@ export default [
     component: TestB,
     name: '实验B',
     type: 'test_b',
+  },
+  {
+    path: '/society',
+    component: Society,
+    name: '实验S',
+    type: 'society',
   },
 ];

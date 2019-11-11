@@ -11,6 +11,9 @@ class Play3 extends PureComponent {
         type={types.ADMIN_FIELD_INPUT}
         questionID={questionID}
         max={2}
+        attr={{
+          withAnswer: false,
+        }}
       />
     );
   }

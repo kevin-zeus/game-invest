@@ -1,5 +1,5 @@
 /**
- * 该组件会将用户填写的词和正确的词对比，然后把正确的个数作为回答提交
+ * 该组件会将用户填写的词和正确的词对比，然后返回true或false
  */
 import React, { Component } from 'react';
 import { Input } from 'antd';

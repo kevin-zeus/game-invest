@@ -1,11 +1,13 @@
+/* eslint-disable react/no-danger */
 import React, { Component } from 'react';
 import {
-  Form, Button, Modal,
+  Form, Button, Modal, Input,
 } from 'antd';
 import Types from './formItemTypes';
 
 import WordJudegInput from './WordJudegInput';
 import SimpleAnswerInput from './SimpleAnswerInput';
+import DoubleInput from './DoubleInput';
 
 const FormItem = Form.Item;
 
@@ -13,10 +15,14 @@ class FormLayout extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     const {
-      form, onSubmit,
+      form, onSubmit, withConfirm = true,
     } = this.props;
     form.validateFields(async (err, values) => {
       if (!err) {
+        if (!withConfirm) {
+          await onSubmit(values);
+          return;
+        }
         Modal.confirm({
           title: '提示',
           content: '你确定现在提交你的作答内容吗？',
@@ -39,9 +45,26 @@ class FormLayout extends Component {
         Comp = SimpleAnswerInput;
         break;
       }
+      case Types.DOUBLE_INPUT: {
+        Comp = DoubleInput;
+        break;
+      }
+      case Types.INPUT: {
+        Comp = Input;
+        break;
+      }
       default: break;
     }
     return Comp;
+  }
+
+  getLabel = (label, isHtml) => {
+    if (isHtml) {
+      return (
+        <div dangerouslySetInnerHTML={{ __html: label }} />
+      );
+    }
+    return label;
   }
 
   render() {
@@ -51,6 +74,7 @@ class FormLayout extends Component {
       attr,
       formList,
       isDisabled,
+      titleIsHtml = false,
     } = this.props;
     const Comp = this.switchItem(type);
     return (
@@ -59,7 +83,7 @@ class FormLayout extends Component {
           formList && formList.map((item) => (
             <FormItem
               key={item.field}
-              label={item.title}
+              label={this.getLabel(item.title, titleIsHtml)}
             >
               {
                 getFieldDecorator(item.field, {})(

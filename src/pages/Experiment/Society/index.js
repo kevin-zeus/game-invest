@@ -1,22 +1,21 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
 import { Button } from 'antd';
+import styled from 'styled-components';
 import configs from './test.config';
 
 import ExperimentService from '../../../server/Experiment';
 import ResultService from '../../../server/Result'; // 获取step限制已经填过的内容不可再填
 
-const TYPENAME = 'test_b';
+const TYPENAME = 'society';
 
 const Wrap = styled.div`
   padding: 20px 16px;
 `;
 
-class TestB extends Component {
+class Society extends Component {
   state = {
     btnMsg: '',
     index: 0,
-    soundUrl: null,
     id: null,
   }
 
@@ -42,16 +41,6 @@ class TestB extends Component {
     this.setState({
       id: expe[0].id,
       index,
-    }, async () => {
-      await this.getSound();
-    });
-  }
-
-  getSound = async () => {
-    const { id } = this.state;
-    const sound = await ExperimentService.getSounUrl(id);
-    this.setState({
-      soundUrl: sound,
     });
   }
 
@@ -73,7 +62,7 @@ class TestB extends Component {
     });
   }
 
-  showBtn = (msg = '下一个测试') => {
+  showBtn = (msg = '下一个游戏') => {
     this.setState({
       btnMsg: msg,
     });
@@ -81,17 +70,16 @@ class TestB extends Component {
 
   render() {
     const {
-      btnMsg, index, soundUrl, id,
+      btnMsg, index, id,
     } = this.state;
     return (
       <Wrap>
-        <h1>实验B</h1>
+        <h1>实验S</h1>
         <div>
           {
             configs.map((item, i) => (
               index === i && (
                 <item.component
-                  soundUrl={soundUrl}
                   expeID={id}
                   key={item.key}
                   hideBtn={this.hideBtn}
@@ -118,4 +106,4 @@ class TestB extends Component {
   }
 }
 
-export default TestB;
+export default Society;

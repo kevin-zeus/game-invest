@@ -2,7 +2,7 @@ import moment from 'moment';
 import AV from './server';
 
 class Result {
-  static async addResult(expeID, value, step = 0, { beginTime, endTime }) {
+  static async addResult(expeID, value, step = 0, { beginTime, endTime } = {}) {
     try {
       const User = AV.User.current();
 
@@ -22,10 +22,16 @@ class Result {
       const tempObj = { ...value };
       const keys = Object.keys(tempObj);
       const prev = keys[0];
-      tempObj[`${prev}_begintime`] = beginTime;
-      tempObj[`${prev}_endtime`] = endTime;
-      const spanTime = moment(endTime) - moment(beginTime);
-      tempObj[`${prev}_timespan`] = moment(spanTime).format('mm:ss');
+      if (beginTime) {
+        tempObj[`${prev}_begintime`] = beginTime;
+      }
+      if (endTime) {
+        tempObj[`${prev}_endtime`] = endTime;
+      }
+      if (beginTime && endTime) {
+        const spanTime = moment(endTime) - moment(beginTime);
+        tempObj[`${prev}_timespan`] = moment(spanTime).format('mm:ss');
+      }
 
 
       result.set('user', User);
@@ -78,9 +84,9 @@ class Result {
           const schoolID = r.get('user').get('username');
           const school = r.get('user').get('school');
           const o = {};
-          o['姓名'] = name;
-          o['学号'] = schoolID;
-          o['学校'] = school;
+          o.Name = name;
+          o.Student_id = schoolID;
+          o.University = school;
           arr.unshift(o);
           return arr;
         });

@@ -36,7 +36,7 @@ class TestA extends Component {
     }
     if (index >= configs.length) {
       this.setState({
-        btnMsg: '已参与，退回首页',
+        btnMsg: '您已参与该实验，退回首页',
       });
     }
     this.setState({
@@ -57,10 +57,10 @@ class TestA extends Component {
 
   handleClick = () => {
     const { history } = this.props;
-    let { index } = this.state;
+    const { index } = this.state;
     if (index < configs.length - 1) {
       this.setState({
-        index: index += 1,
+        index: index + 1,
       });
     } else {
       history.push('/');
