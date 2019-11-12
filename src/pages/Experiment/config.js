@@ -4,4 +4,5 @@ export default {
   test_b: true,
   emotion: true,
   society: true,
+  risk: true,
 };

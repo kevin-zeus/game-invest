@@ -4,6 +4,7 @@ import {
 } from 'antd';
 import styled from 'styled-components';
 import FieldInput from './FieldInput';
+import RadioCheckbox from './RadioCheckbox';
 import Types from './formItemTypes';
 
 import QuestionService from '../../server/Question';
@@ -102,6 +103,10 @@ class FormLayout extends React.Component {
       }
       case Types.INPUT: {
         Comp = Input;
+        break;
+      }
+      case Types.RADIO_CHECKBOX: {
+        Comp = RadioCheckbox;
         break;
       }
       default: break;
