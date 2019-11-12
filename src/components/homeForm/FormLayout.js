@@ -8,6 +8,7 @@ import Types from './formItemTypes';
 import WordJudegInput from './WordJudegInput';
 import SimpleAnswerInput from './SimpleAnswerInput';
 import DoubleInput from './DoubleInput';
+import EmotionRadio from './EmotionRadio';
 
 const FormItem = Form.Item;
 
@@ -47,6 +48,10 @@ class FormLayout extends Component {
       }
       case Types.DOUBLE_INPUT: {
         Comp = DoubleInput;
+        break;
+      }
+      case Types.EMOTION_RADIO: {
+        Comp = EmotionRadio;
         break;
       }
       case Types.INPUT: {
