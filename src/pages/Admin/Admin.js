@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import {
-  message, notification, Layout, Menu, Icon,
+  message, notification, Layout, Menu, Icon, Button,
 } from 'antd';
 import styled from 'styled-components';
 import {
@@ -13,10 +13,13 @@ import routerConfig from './router.config';
 const { Sider, Content, Header } = Layout;
 
 const WrapHeader = styled(Header)`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 24px;
   .trigger {
     font-size: 18px;
     line-height: 64px;
-    padding: 0 24px;
     cursor: pointer;
     transition: color 0.3s;
   }
@@ -59,6 +62,11 @@ class Admin extends PureComponent {
     }
   }
 
+  goHome = () => {
+    const { history } = this.props;
+    history.push('/');
+  }
+
   render() {
     const { collapsed } = this.state;
     const LogoDiv = styled.div`
@@ -88,12 +96,19 @@ class Admin extends PureComponent {
           </Menu>
         </Sider>
         <Layout>
-          <WrapHeader style={{ background: '#fff', padding: 0 }}>
+          <WrapHeader style={{ background: '#fff' }}>
             <Icon
               className="trigger"
               type={collapsed ? 'menu-unfold' : 'menu-fold'}
               onClick={this.toggle}
             />
+            <Button
+              icon="export"
+              type="default"
+              onClick={this.goHome}
+            >
+              退出后台
+            </Button>
           </WrapHeader>
           <Content
             style={{

@@ -1,6 +1,7 @@
 import TestA from './TestA';
 import TestB from './TestB';
 import Society from './Society';
+import Risk from './Risk';
 
 export default [
   {
@@ -20,5 +21,11 @@ export default [
     component: Society,
     name: '实验S',
     type: 'society',
+  },
+  {
+    path: '/risk',
+    component: Risk,
+    name: '实验R',
+    type: 'risk',
   },
 ];

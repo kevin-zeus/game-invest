@@ -9,6 +9,7 @@ import WordJudegInput from './WordJudegInput';
 import SimpleAnswerInput from './SimpleAnswerInput';
 import DoubleInput from './DoubleInput';
 import EmotionRadio from './EmotionRadio';
+import RiskRadio from './RiskRadio';
 
 const FormItem = Form.Item;
 
@@ -54,6 +55,10 @@ class FormLayout extends Component {
         Comp = EmotionRadio;
         break;
       }
+      case Types.RISK_RADIO: {
+        Comp = RiskRadio;
+        break;
+      }
       case Types.INPUT: {
         Comp = Input;
         break;
@@ -92,7 +97,7 @@ class FormLayout extends Component {
             >
               {
                 getFieldDecorator(item.field, {})(
-                  <Comp {...attr} answer={item.answer || ''} />
+                  <Comp {...attr} options={item.options} answer={item.answer || ''} />
                 )
               }
             </FormItem>

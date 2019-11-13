@@ -3,7 +3,7 @@ import { Tabs } from 'antd';
 
 import ExperimentService from '../../../server/Experiment';
 
-import Table1 from './Table1';
+import configs from './tabs.config';
 
 const { TabPane } = Tabs;
 const TYPENAME = 'risk';
@@ -27,9 +27,13 @@ class Risk extends Component {
   render() {
     return (
       <Tabs defaultActiveKey="1" onChange={this.handleTabChange}>
-        <TabPane tab="表格1" key="1">
-          <Table1 />
-        </TabPane>
+        {
+          configs.map((tab) => (
+            <TabPane tab={tab.title} key={tab.key}>
+              <tab.component />
+            </TabPane>
+          ))
+        }
       </Tabs>
     );
   }
