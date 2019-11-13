@@ -12,7 +12,7 @@ const reg = /\d+(.\d+)?%?/g;
 class RiskRadio extends Component {
   state = {
     radioValue: '',
-    results: [], // [{10: 0.2}]
+    results: [], // [{prob: [10, 90], dollar: [1, 1.6]}]
   }
 
   componentDidMount() {
@@ -23,11 +23,15 @@ class RiskRadio extends Component {
     const { options } = this.props;
     const results = options.map((op) => {
       const arr = op.match(reg);
-      const obj = {};
+      const obj = {
+        prob: [],
+        dollar: [],
+      };
       for (let i = 0, j = 0; i < arr.length / 2; i += 1, j += 2) {
         const field = parseInt(arr[j + 1], 10);
         const value = parseFloat(arr[j]);
-        obj[`${field}`] = value;
+        obj.prob.push(field);
+        obj.dollar.push(value);
       }
       return obj;
     });
@@ -38,12 +42,16 @@ class RiskRadio extends Component {
 
   // 通知Form组件该项有更改
   emitChange = (value) => {
-    const { onChange } = this.props;
+    const { onChange, options } = this.props;
+    const { radioValue } = this.state;
     // 汇率换算
     const val = (value * 7.12).toFixed(2);
-    console.log('概率下获取金额：', val);
+    console.log(`概率下获取金额：${val} = (${value} * 7.12)`);
     if (typeof onChange === 'function') {
-      onChange(val);
+      onChange([
+        val,
+        options[radioValue],
+      ]);
     }
   }
 
@@ -51,24 +59,25 @@ class RiskRadio extends Component {
     const { value: index } = e.target;
     const { results } = this.state;
     const tempObj = results[index];
-    let scope = Object.keys(tempObj); // []
-    scope = scope.sort();
+    let { prob } = tempObj;
+    const { dollar } = tempObj;
+    prob = prob.sort();
 
-    let left = 0;
-    let result = 0;
+    const randonDollarIndex = Math.floor(Math.random() * dollar.length);
+    let result = dollar[randonDollarIndex]; // 防止随机概率为0
+
     const random = Math.floor(Math.random() * 100);
-    console.log('概率得数', random);
-    for (let i = 0; i < scope.length; i += 1) {
-      if (left <= random && random < +scope[i]) {
-        result = tempObj[scope[i]];
+    for (let i = 0; i < prob.length; i += 1) {
+      if (random < +prob[i]) {
+        result = dollar[i];
         break;
       }
-      left = +scope[i];
     }
-    this.emitChange(result);
 
     this.setState({
       radioValue: index,
+    }, () => {
+      this.emitChange(result);
     });
   }
 
