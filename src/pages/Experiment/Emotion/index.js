@@ -34,6 +34,12 @@ class Emotion extends Component {
     this.init();
   }
 
+  componentWillUnmount() {
+    if (this.time) {
+      clearInterval(this.time);
+    }
+  }
+
   init = async () => {
     const { history } = this.props;
     const expe = await ExperimentService.getExperimentByType(TYPENAME);
@@ -50,14 +56,14 @@ class Emotion extends Component {
       });
     }
 
-    const time = setInterval(() => {
+    this.time = setInterval(() => {
       const { senconds } = this.state;
       this.setState({
         senconds: senconds - 1,
       }, () => {
         const { senconds: sec } = this.state;
         if (sec === 0) {
-          clearInterval(time);
+          clearInterval(this.time);
           // 上传
         }
       });
