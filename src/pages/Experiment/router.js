@@ -2,6 +2,7 @@ import TestA from './TestA';
 import TestB from './TestB';
 import Society from './Society';
 import Risk from './Risk';
+import Emotion from './Emotion';
 
 export default [
   {
@@ -27,5 +28,11 @@ export default [
     component: Risk,
     name: '实验R',
     type: 'risk',
+  },
+  {
+    path: '/emotion',
+    component: Emotion,
+    name: '实验E',
+    type: 'emotion',
   },
 ];

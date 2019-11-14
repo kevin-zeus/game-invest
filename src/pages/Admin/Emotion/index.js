@@ -25,7 +25,7 @@ class Emotion extends Component {
   render() {
     return (
       <Tabs defaultActiveKey="1" onChange={this.handleTabChange}>
-        <TabPane tab="测试1-默写题" key="1">
+        <TabPane tab="情绪测试" key="1">
           <TestOne />
         </TabPane>
       </Tabs>

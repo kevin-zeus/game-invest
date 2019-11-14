@@ -7,31 +7,25 @@ import React, { Component } from 'react';
 import { Radio } from 'antd';
 
 class EmotionRadio extends Component {
-  state = {
-    value: '',
-  }
-
   // 通知Form组件该项有更改
-  emitChange = () => {
+  emitChange = (value) => {
     const { onChange } = this.props;
     if (typeof onChange === 'function') {
-      onChange(this.state);
+      onChange(value);
     }
   }
 
   handleChange = (e) => {
     const { value } = e.target;
-    this.setState({
-      value,
-    }, () => {
-      this.emitChange(value);
-    });
+    this.emitChange(value);
   }
 
   render() {
     return (
       <div>
-        <Radio.Group>
+        <Radio.Group
+          onChange={this.handleChange}
+        >
           <Radio value={1}>几乎没有</Radio>
           <Radio value={2}>比较少</Radio>
           <Radio value={3}>中等程度</Radio>
