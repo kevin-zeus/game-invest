@@ -80,6 +80,7 @@ class Result {
       if (result) {
         const data = result.map((r) => {
           const arr = r.get('resultList');
+
           const name = r.get('user').get('realName');
           const schoolID = r.get('user').get('username');
           const school = r.get('user').get('school');
@@ -87,12 +88,18 @@ class Result {
           o.Name = name;
           o.Student_id = schoolID;
           o.University = school;
+
           arr.unshift(o);
           return arr;
         });
         const cleanData = data.map((item) => {
           const temp = item.reduce((pre, cur) => Object.assign(pre, cur), {});
-          return temp;
+          const keys = Object.keys(temp).sort();
+          const newObj = {};
+          for (let i = 0; i < keys.length; i += 1) {
+            newObj[keys[i]] = temp[keys[i]];
+          }
+          return newObj;
         });
         return cleanData;
       }

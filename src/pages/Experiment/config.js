@@ -5,4 +5,5 @@ export default {
   emotion: true,
   society: true,
   risk: true,
+  weather: true,
 };

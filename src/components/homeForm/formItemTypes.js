@@ -4,5 +4,6 @@ export default {
   DOUBLE_INPUT: 'double_input',
   EMOTION_RADIO: 'emotion_radio', // 情绪调查的单选
   RISK_RADIO: 'risk_radio', // 风险偏好的单选
+  RADIO_CHECKBOX: 'radio_checkbox', // 天气的单选多选组件
   INPUT: 'input', // 普通的输入框
 };

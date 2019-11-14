@@ -7,9 +7,9 @@ import configs from './tabs.config';
 import ExportExcel from '../ExportExcel';
 
 const { TabPane } = Tabs;
-const TYPENAME = 'risk';
+const TYPENAME = 'weather';
 
-class Risk extends Component {
+class Weather extends Component {
   state = {
     id: null,
   }
@@ -51,4 +51,4 @@ class Risk extends Component {
   }
 }
 
-export default Risk;
+export default Weather;

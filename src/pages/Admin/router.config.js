@@ -4,6 +4,7 @@ import Emotion from './Emotion';
 import Setting from './Setting';
 import Society from './Society';
 import Risk from './Risk';
+import Weather from './Weather';
 
 export default [
   {
@@ -34,6 +35,12 @@ export default [
     menu: '风险偏好',
     path: '/risk',
     component: Risk,
+    icon: 'snippets',
+  },
+  {
+    menu: '天气感知问卷',
+    path: '/weather',
+    component: Weather,
     icon: 'snippets',
   },
   {

@@ -10,6 +10,7 @@ import SimpleAnswerInput from './SimpleAnswerInput';
 import DoubleInput from './DoubleInput';
 import EmotionRadio from './EmotionRadio';
 import RiskRadio from './RiskRadio';
+import RadioAndCheckbox from './RadioAndCheckbox';
 
 const FormItem = Form.Item;
 
@@ -59,6 +60,10 @@ class FormLayout extends Component {
         Comp = RiskRadio;
         break;
       }
+      case Types.RADIO_CHECKBOX: {
+        Comp = RadioAndCheckbox;
+        break;
+      }
       case Types.INPUT: {
         Comp = Input;
         break;
@@ -98,7 +103,7 @@ class FormLayout extends Component {
             >
               {
                 getFieldDecorator(item.field, { rules })(
-                  <Comp {...attr} options={item.options} answer={item.answer || ''} />
+                  <Comp {...attr} type={item.type} options={item.options} answer={item.answer || ''} />
                 )
               }
             </FormItem>

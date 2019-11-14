@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button } from 'antd';
 
-import XlsxService from '../../../server/XlsxService';
+import XlsxService from '../../server/XlsxService';
 
 class ExportExcel extends Component {
   state = {

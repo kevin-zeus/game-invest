@@ -7,13 +7,13 @@ import Types from '../../../components/homeForm/formItemTypes';
 import QuestionService from '../../../server/Question';
 import ResultService from '../../../server/Result';
 
-const questionID = '5dca393043c257007f5c6805';
+const questionID = '5dcd15432a6bfd009234c6dc';
 const step = 1;
 
-class Table1 extends Component {
+class Survey extends Component {
   state = {
     formList: null,
-    time: 300,
+    time: 180,
     disabled: false,
   }
 
@@ -56,22 +56,11 @@ class Table1 extends Component {
   }
 
   handleSubmit = async (values) => {
-    const { time } = this.state;
-    const { showBtn, expeID } = this.props;
-    if (time !== 0) {
-      message.error(`对不起，${time}秒之后才可提交，请再仔细思考各个选项`);
-      return;
-    }
-    const fields = Object.keys(values);
-    const resultObj = {};
-    fields.forEach((field) => {
-      resultObj[field] = values[field][1];
-      resultObj[`${field}_payoff`] = values[field][0];
-    });
+    const { expeID, showBtn } = this.props;
     try {
-      await ResultService.addResult(expeID, resultObj, step);
+      await ResultService.addResult(expeID, values, step);
+      showBtn('已结束，返回首页');
       message.success('提交成功');
-      showBtn();
       this.setState({
         disabled: true,
       });
@@ -84,11 +73,8 @@ class Table1 extends Component {
     const { formList, time, disabled } = this.state;
     return (
       <Card>
-        <h3>第一页</h3>
         <p>
-          该页中有
-          {formList && formList.length}
-          个小游戏，每个小游戏提供了两个含有几率收益的选项，请你根据自己的偏好，选出每个小游戏你偏好的选项。五分钟倒计时结束后才可提交，在确认提交之前你都可以修改
+          该问卷至少需要3分钟才可提交，请在倒计时结束后再提交
         </p>
         <h3>
           倒计时剩余
@@ -96,15 +82,10 @@ class Table1 extends Component {
           秒
         </h3>
         <FormLayout
-          rules={[
-            {
-              required: true,
-              message: '该项不能为空，请选择一个选项',
-            },
-          ]}
           isDisabled={disabled}
           onSubmit={this.handleSubmit}
-          type={Types.RISK_RADIO}
+          type={Types.RADIO_CHECKBOX}
+          titleIsHtml
           formList={formList}
         />
       </Card>
@@ -112,4 +93,4 @@ class Table1 extends Component {
   }
 }
 
-export default Table1;
+export default Survey;

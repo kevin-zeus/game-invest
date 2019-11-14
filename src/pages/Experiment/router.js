@@ -2,6 +2,7 @@ import TestA from './TestA';
 import TestB from './TestB';
 import Society from './Society';
 import Risk from './Risk';
+import Weather from './Weather';
 
 export default [
   {
@@ -27,5 +28,11 @@ export default [
     component: Risk,
     name: '实验R',
     type: 'risk',
+  },
+  {
+    path: '/weather',
+    component: Weather,
+    name: '实验W',
+    type: 'weather',
   },
 ];

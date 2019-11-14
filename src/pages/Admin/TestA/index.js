@@ -4,7 +4,7 @@ import { Tabs } from 'antd';
 import SoundUpload from '../../../components/adminForm/SoundUpload';
 import FormLayout from '../../../components/adminForm/wordFormLayout';
 
-import ExportExcel from './ExportExcel';
+import ExportExcel from '../ExportExcel';
 import TestOne from './TestOne';
 import TestTwo from './TestTwo';
 import TestThree from './TestThree';

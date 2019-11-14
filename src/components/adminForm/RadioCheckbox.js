@@ -64,11 +64,7 @@ class RadioCheckbox extends Component {
   handleChange = (e, type) => {
     const { value } = e.target;
     const temp = { ...this.state };
-    if (type === 'type') {
-      temp[type] = e;
-    } else {
-      temp[type] = value;
-    }
+    temp[type] = value;
     this.setState({
       ...temp,
     }, () => {

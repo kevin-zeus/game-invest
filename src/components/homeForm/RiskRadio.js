@@ -83,10 +83,8 @@ class RiskRadio extends Component {
 
   render() {
     const { options } = this.props;
-    const { radioValue } = this.state;
     return (
       <Radio.Group
-        value={radioValue}
         onChange={this.handleChange}
       >
         {
