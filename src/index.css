@@ -26,3 +26,10 @@ html, body, #root {
 .ant-layout-content {
   overflow: auto;
 }
+
+.ant-radio-wrapper {
+  white-space: normal !important;
+}
+.ant-checkbox-group-item {
+  display: block;
+}
