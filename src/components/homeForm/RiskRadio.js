@@ -46,11 +46,11 @@ class RiskRadio extends Component {
     const { radioValue } = this.state;
     // 汇率换算
     const val = (value * 7.12).toFixed(2);
-    console.log(`概率下获取金额：${val} = (${value} * 7.12)`);
+    // console.log(`概率下获取金额：${val} = (${value} * 7.12)`);
     if (typeof onChange === 'function') {
       onChange([
         val,
-        options[radioValue],
+        options[radioValue].substr(0, 1),
       ]);
     }
   }

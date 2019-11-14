@@ -85,6 +85,7 @@ class FormLayout extends Component {
       formList,
       isDisabled,
       titleIsHtml = false,
+      rules,
     } = this.props;
     const Comp = this.switchItem(type);
     return (
@@ -96,18 +97,22 @@ class FormLayout extends Component {
               label={this.getLabel(item.title, titleIsHtml)}
             >
               {
-                getFieldDecorator(item.field, {})(
+                getFieldDecorator(item.field, { rules })(
                   <Comp {...attr} options={item.options} answer={item.answer || ''} />
                 )
               }
             </FormItem>
           ))
         }
-        <FormItem>
-          <Button disabled={isDisabled} htmlType="submit" type="primary" block>
-            提交
-          </Button>
-        </FormItem>
+        {
+          formList && (
+            <FormItem>
+              <Button disabled={isDisabled} htmlType="submit" type="primary" block>
+                提交
+              </Button>
+            </FormItem>
+          )
+        }
       </Form>
     );
   }

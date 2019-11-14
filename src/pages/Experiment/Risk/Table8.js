@@ -7,10 +7,10 @@ import Types from '../../../components/homeForm/formItemTypes';
 import QuestionService from '../../../server/Question';
 import ResultService from '../../../server/Result';
 
-const questionID = '5dca393043c257007f5c6805';
-const step = 1;
+const questionID = '5dcbace443c257007f5e2d12';
+const step = 8;
 
-class Table1 extends Component {
+class Table8 extends Component {
   state = {
     formList: null,
     time: 300,
@@ -20,12 +20,6 @@ class Table1 extends Component {
   componentDidMount() {
     this.init();
     this.startTimeDown();
-  }
-
-  componentWillUnmount() {
-    if (this.time) {
-      clearInterval(this.time);
-    }
   }
 
   init = async () => {
@@ -68,7 +62,6 @@ class Table1 extends Component {
       resultObj[field] = values[field][1];
       resultObj[`${field}_payoff`] = values[field][0];
     });
-    console.log(resultObj);
     try {
       await ResultService.addResult(expeID, resultObj, step);
       message.success('提交成功');
@@ -85,7 +78,7 @@ class Table1 extends Component {
     const { formList, time, disabled } = this.state;
     return (
       <Card>
-        <h3>第一页</h3>
+        <h3>第八页</h3>
         <p>
           该页中有
           {formList && formList.length}
@@ -113,4 +106,4 @@ class Table1 extends Component {
   }
 }
 
-export default Table1;
+export default Table8;

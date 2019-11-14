@@ -7,25 +7,19 @@ import Types from '../../../components/homeForm/formItemTypes';
 import QuestionService from '../../../server/Question';
 import ResultService from '../../../server/Result';
 
-const questionID = '5dca393043c257007f5c6805';
-const step = 1;
+const questionID = '5dcbad032a6bfd009233628d';
+const step = 10;
 
-class Table1 extends Component {
+class Table10 extends Component {
   state = {
     formList: null,
-    time: 300,
+    time: 30,
     disabled: false,
   }
 
   componentDidMount() {
     this.init();
     this.startTimeDown();
-  }
-
-  componentWillUnmount() {
-    if (this.time) {
-      clearInterval(this.time);
-    }
   }
 
   init = async () => {
@@ -68,11 +62,10 @@ class Table1 extends Component {
       resultObj[field] = values[field][1];
       resultObj[`${field}_payoff`] = values[field][0];
     });
-    console.log(resultObj);
     try {
       await ResultService.addResult(expeID, resultObj, step);
       message.success('提交成功');
-      showBtn();
+      showBtn('已完成全部测试，返回首页');
       this.setState({
         disabled: true,
       });
@@ -85,11 +78,11 @@ class Table1 extends Component {
     const { formList, time, disabled } = this.state;
     return (
       <Card>
-        <h3>第一页</h3>
+        <h3>第十页</h3>
         <p>
           该页中有
           {formList && formList.length}
-          个小游戏，每个小游戏提供了两个含有几率收益的选项，请你根据自己的偏好，选出每个小游戏你偏好的选项。五分钟倒计时结束后才可提交，在确认提交之前你都可以修改
+          个小游戏，每个小游戏提供了五个含有几率收益的选项，请你根据自己的偏好，选出每个小游戏你偏好的选项。半分钟倒计时结束后才可提交，在确认提交之前你都可以修改
         </p>
         <h3>
           倒计时剩余
@@ -113,4 +106,4 @@ class Table1 extends Component {
   }
 }
 
-export default Table1;
+export default Table10;
