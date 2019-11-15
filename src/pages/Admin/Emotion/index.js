@@ -37,7 +37,7 @@ class Emotion extends Component {
         <TabPane tab="导出数据" key="0">
           <ExportExcel expeID={id} />
         </TabPane>
-        <TabPane tab="测试1-默写题" key="1">
+        <TabPane tab="情绪测试" key="1">
           <TestOne />
         </TabPane>
       </Tabs>

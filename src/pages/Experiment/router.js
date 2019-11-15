@@ -3,6 +3,7 @@ import TestB from './TestB';
 import Society from './Society';
 import Risk from './Risk';
 import Weather from './Weather';
+import Emotion from './Emotion';
 
 export default [
   {
@@ -34,5 +35,11 @@ export default [
     component: Weather,
     name: '实验W',
     type: 'weather',
+  },
+  {
+    path: '/emotion',
+    component: Emotion,
+    name: '实验E',
+    type: 'emotion',
   },
 ];
