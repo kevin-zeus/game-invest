@@ -46,9 +46,13 @@ class Home extends Component {
     history.push(path);
   }
 
-  async componentDidMount() {
+  componentDidMount() {
+    const { history } = this.props;
+    if (!UserService.isLogined()) {
+      history.push('/login');
+    }
     this.init();
-    await this.setExpeList();
+    this.setExpeList();
   }
 
   init = () => {
@@ -91,6 +95,13 @@ class Home extends Component {
                   <p>姓名：{user.realName}</p>
                   <p>学号：{user.username}</p>
                   <p>学校：{user.school}</p>
+                  <p>收益方式：
+                    {
+                      user.payment || (
+                        <Button type="link" onClick={() => this.navigateTo('/payment')}>设置</Button>
+                      )
+                    }
+                  </p>
                 </Card>
               )
             }

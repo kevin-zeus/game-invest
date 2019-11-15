@@ -6,6 +6,7 @@ import Footer from '../../components/Footer';
 import Home from './Home';
 import Register from './Register';
 import Login from './Login';
+import Payment from './Payment';
 
 import UserService from '../../server/User';
 
@@ -38,6 +39,7 @@ class HomeRoot extends Component {
           <Route path="/" exact component={Home} />
           <Route path="/register" exact component={Register} />
           <Route path="/login" exact component={Login} />
+          <Route path="/payment" exact component={Payment} />
           {
             RouterConfig.map((route) => (
               <Route key={route.path} path={route.path} component={route.component} />

@@ -55,6 +55,16 @@ class User {
     }
     return null;
   }
+
+  // 设置支付方式
+  static async setPayment(str) {
+    if (this.isLogined) {
+      const user = AV.User.current();
+      user.set('payment', str);
+      return user.save();
+    }
+    return null;
+  }
 }
 
 export default User;
