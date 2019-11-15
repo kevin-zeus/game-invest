@@ -13,7 +13,11 @@ class Survey1 extends Component {
   render() {
     return (
       <div>
-        <p>【注意】金额的数字必须在百分比概率前面，百分比必须是10%这种格式，不支持多选！！！</p>
+        <p>
+          【提示】
+          {'<br/>'}
+          是换行符
+        </p>
         <FormLayout
           type={Types.RADIO_CHECKBOX}
           questionID={questionID}
