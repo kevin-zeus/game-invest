@@ -84,10 +84,12 @@ class Result {
           const name = r.get('user').get('realName');
           const schoolID = r.get('user').get('username');
           const school = r.get('user').get('school');
+          const payment = r.get('user').get('payment');
           const o = {};
           o.Name = name;
           o.Student_id = schoolID;
           o.University = school;
+          o.Payment = payment;
 
           arr.unshift(o);
           return arr;
