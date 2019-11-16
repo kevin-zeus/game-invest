@@ -118,6 +118,12 @@ class Play11 extends Component {
             placeholder: '新的投入额',
             money,
           }}
+          rules={[
+            {
+              required: true,
+              message: '请填写完整',
+            },
+          ]}
         />
       </Card>
     );

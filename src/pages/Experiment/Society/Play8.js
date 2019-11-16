@@ -103,6 +103,12 @@ class Play8 extends Component {
             ],
             money,
           }}
+          rules={[
+            {
+              required: true,
+              message: '请填写完整',
+            },
+          ]}
         />
       </Card>
     );

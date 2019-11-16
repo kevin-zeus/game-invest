@@ -42,7 +42,7 @@ class Play7 extends Component {
     const { field } = formList[0];
 
     if (+values[field] < 0 || +values[field] > money || !values[field]) {
-      message.error('金额不能为空且必须为0~200的数字');
+      message.error(`金额不能为空且必须为0~${money}的数字`);
       return;
     }
 
@@ -87,6 +87,12 @@ class Play7 extends Component {
           attr={{
             disabled,
           }}
+          rules={[
+            {
+              required: true,
+              message: '请填写完整',
+            },
+          ]}
         />
       </Card>
     );

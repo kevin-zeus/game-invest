@@ -24,7 +24,7 @@ class DoubleInput extends Component {
     const { labels, money } = this.props;
     const { value } = e.target;
     if (+value < 0 || +value > money) {
-      message.error('金额不能为空且必须为0~200的数字');
+      message.error(`金额不能为空且必须为0~${money}的数字`);
       return;
     }
     if (type === 'guess') {

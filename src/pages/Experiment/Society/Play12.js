@@ -120,6 +120,12 @@ class Play12 extends Component {
             placeholder: '博彩金额',
             money,
           }}
+          rules={[
+            {
+              required: true,
+              message: '请填写完整',
+            },
+          ]}
         />
       </Card>
     );
