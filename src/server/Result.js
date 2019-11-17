@@ -22,6 +22,8 @@ class Result {
       } else {
         query.set('user', PUser);
         query.set('experiment', PExpe);
+        query.set('student', User.realname);
+        query.set('expename', expe.name);
       }
 
       const tempObj = { ...value };

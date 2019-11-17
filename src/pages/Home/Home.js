@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, { Component } from 'react';
 import {
-  Layout, List, Button, Card,
+  Layout, List, Button, Card, Modal,
 } from 'antd';
 import styled from 'styled-components';
 
@@ -32,13 +32,14 @@ const ImgBox = styled.div`
   }
 `;
 const ListBox = styled.div`
-  padding: 30px 20px;
+  padding: 0 20px;
 `;
 
 class Home extends Component {
   state = {
     user: null,
     expeStartList: null,
+    noPayment: true,
   }
 
   navigateTo = (path) => {
@@ -60,6 +61,17 @@ class Home extends Component {
     if (user) {
       this.setState({
         user,
+      }, () => {
+        if (user.payment) {
+          this.setState({
+            noPayment: false,
+          });
+        } else {
+          Modal.warn({
+            title: '提示',
+            content: '请先在个人信息里面设置您的收益支付方式',
+          });
+        }
       });
     }
   }
@@ -79,7 +91,7 @@ class Home extends Component {
   }
 
   render() {
-    const { user, expeStartList } = this.state;
+    const { user, expeStartList, noPayment } = this.state;
     return (
       <div>
         <WrapLayout>
@@ -95,7 +107,7 @@ class Home extends Component {
                   <p>姓名：{user.realname}</p>
                   <p>学号：{user.username}</p>
                   <p>学校：{user.school}</p>
-                  <p>收益方式：
+                  <p>收益支付方式：
                     {
                       user.payment || (
                         <Button type="link" onClick={() => this.navigateTo('/payment')}>设置</Button>
@@ -104,6 +116,11 @@ class Home extends Component {
                   </p>
                 </Card>
               )
+            }
+            {
+              expeStartList
+                ? !expeStartList.test_b && <p style={{ padding: '20px 20px', color: 'red' }}>请按照实验E-S-R-W-A的顺序依次开始实验</p>
+                : ''
             }
             {
               expeStartList && (
@@ -116,7 +133,7 @@ class Home extends Component {
                           <Button
                             type="link"
                             onClick={() => { this.navigateTo(item.path); }}
-                            disabled={!expeStartList[item.type]}
+                            disabled={noPayment || !expeStartList[item.type]}
                           >
                             开始实验
                           </Button>]}

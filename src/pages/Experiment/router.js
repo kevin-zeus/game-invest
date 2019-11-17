@@ -7,16 +7,16 @@ import Emotion from './Emotion';
 
 export default [
   {
-    path: '/test_a',
-    component: TestA,
-    name: '实验A',
-    type: 'test_a',
-  },
-  {
     path: '/test_b',
     component: TestB,
     name: '实验B',
     type: 'test_b',
+  },
+  {
+    path: '/emotion',
+    component: Emotion,
+    name: '实验E',
+    type: 'emotion',
   },
   {
     path: '/society',
@@ -37,9 +37,9 @@ export default [
     type: 'weather',
   },
   {
-    path: '/emotion',
-    component: Emotion,
-    name: '实验E',
-    type: 'emotion',
+    path: '/test_a',
+    component: TestA,
+    name: '实验A',
+    type: 'test_a',
   },
 ];

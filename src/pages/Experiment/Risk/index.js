@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button } from 'antd';
+import { Button, message } from 'antd';
 import styled from 'styled-components';
 import configs from './test.config';
 
@@ -38,6 +38,14 @@ class Risk extends Component {
         btnMsg: '您已参与该实验，退回首页',
       });
     }
+
+    let expeComped = localStorage.getItem('expe');
+    expeComped = JSON.parse(expeComped);
+    if (!expeComped || !expeComped.society) {
+      message.warn('请先完成实验S');
+      history.goBack();
+    }
+
     this.setState({
       id: expe[0].objectId,
       index,
@@ -52,6 +60,10 @@ class Risk extends Component {
         index: index + 1,
       });
     } else {
+      let expeComped = localStorage.getItem('expe');
+      expeComped = JSON.parse(expeComped);
+      expeComped.risk = true;
+      localStorage.setItem('expe', JSON.stringify(expeComped));
       history.push('/');
     }
   }
@@ -75,6 +87,7 @@ class Risk extends Component {
     return (
       <Wrap>
         <h1>实验R</h1>
+        <p>注意：人民币对美元汇率为：1美元=7.12元人民币</p>
         <div>
           {
             configs.map((item, i) => (

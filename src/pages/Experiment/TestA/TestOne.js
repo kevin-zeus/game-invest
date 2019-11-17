@@ -24,9 +24,10 @@ class TestOne extends Component {
     canPlay: true,
     formList: null,
     words: null,
-    senconds: 10, // 倒计时120秒
+    senconds: 120, // 倒计时120秒
     disabled: false, // 是否禁用表单项
     hideFormSubmitBtn: false,
+    showForm: false,
   }
 
   componentWillReceiveProps() {
@@ -62,7 +63,6 @@ class TestOne extends Component {
   }
 
   startCountdown = () => {
-    beginTime = moment().format('YYYY-MM-DD HH:mm:ss');
     const siv = setInterval(() => {
       const { senconds } = this.state;
       this.setState({
@@ -70,9 +70,10 @@ class TestOne extends Component {
       }, () => {
         const { senconds: sec } = this.state;
         if (sec === 0) {
+          beginTime = moment().format('YYYY-MM-DD HH:mm:ss');
           clearInterval(siv);
           this.setState({
-            disabled: true,
+            showForm: true,
           });
         }
       });
@@ -106,7 +107,7 @@ class TestOne extends Component {
   render() {
     const { soundUrl } = this.props;
     const {
-      playStatus, canPlay, formList, words, hideFormSubmitBtn, disabled, senconds,
+      playStatus, canPlay, formList, words, hideFormSubmitBtn, disabled, senconds, showForm,
     } = this.state;
     return (
       <Card>
@@ -118,7 +119,7 @@ class TestOne extends Component {
           <track kind="captions" />
           您的浏览器不支持 audio 元素。
         </audio>
-        <p>实验人员将读十个词,读完以后,请你回忆这些词(可以不按顺序) 。这十个词只读一遍,所以请你仔细听,尽量多记。正确回忆一个单词，给予0.5元钱的收益。音频播放结束后，会有120秒倒计时，倒计时结束后你将不能继续填写</p>
+        <p>实验人员将读十个词,读完以后,请你回忆这些词(可以不按顺序) 。这十个词只读一遍,所以请你仔细听,尽量多记。正确回忆一个词，给予0.5元钱的收益。音频播放结束后，请你在120秒内仔细回忆听到的词语，倒计时结束后请在出现的输入框内默写。</p>
         {
           soundUrl && canPlay && (
             <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -149,7 +150,7 @@ class TestOne extends Component {
         </h2>
         {/* 题目和表单选项在这里 */}
         {
-          !canPlay && (
+          showForm && (
             <div>
               <FormLayout
                 isDisabled={hideFormSubmitBtn}

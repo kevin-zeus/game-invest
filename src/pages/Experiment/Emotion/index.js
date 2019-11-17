@@ -27,7 +27,7 @@ class Emotion extends Component {
     btnMsg: '',
     index: 0,
     id: null,
-    senconds: 180,
+    senconds: 120,
   }
 
   componentDidMount() {
@@ -83,6 +83,7 @@ class Emotion extends Component {
         index: index + 1,
       });
     } else {
+      localStorage.setItem('expe', JSON.stringify({ emotion: true }));
       history.push('/');
     }
   }

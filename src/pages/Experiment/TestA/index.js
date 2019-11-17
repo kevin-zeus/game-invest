@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Button } from 'antd';
+import { Button, message } from 'antd';
 import configs from './test.config';
 
 import ExperimentService from '../../../server/Experiment';
@@ -39,6 +39,14 @@ class TestA extends Component {
         btnMsg: '您已参与该实验，退回首页',
       });
     }
+
+    let expeComped = localStorage.getItem('expe');
+    expeComped = JSON.parse(expeComped);
+    if (!expeComped || !expeComped.weather) {
+      message.warn('请先完成实验W');
+      history.goBack();
+    }
+
     this.setState({
       id: expe[0].objectId,
       index,

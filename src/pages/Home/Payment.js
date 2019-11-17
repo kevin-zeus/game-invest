@@ -98,7 +98,7 @@ class Payment extends Component {
         <p>请在下面设置你获取报酬的方式：</p>
         <Card>
           <Wrap>
-            <p>支付方式：</p>
+            <p>收益支付方式选择：</p>
             <Select defaultValue={type} onChange={this.handleSelectChange}>
               <Select.Option value="支付宝">支付宝支付</Select.Option>
               <Select.Option value="微信">加微信好友后转账</Select.Option>

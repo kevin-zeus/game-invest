@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button } from 'antd';
+import { Button, message } from 'antd';
 import styled from 'styled-components';
 import configs from './test.config';
 
@@ -38,6 +38,14 @@ class Weather extends Component {
         btnMsg: '您已参与该调查，退回首页',
       });
     }
+
+    let expeComped = localStorage.getItem('expe');
+    expeComped = JSON.parse(expeComped);
+    if (!expeComped || !expeComped.risk) {
+      message.warn('请先完成实验R');
+      history.goBack();
+    }
+
     this.setState({
       id: expe[0].objectId,
       index,
@@ -52,6 +60,10 @@ class Weather extends Component {
         index: index + 1,
       });
     } else {
+      let expeComped = localStorage.getItem('expe');
+      expeComped = JSON.parse(expeComped);
+      expeComped.weather = true;
+      localStorage.setItem('expe', JSON.stringify(expeComped));
       history.push('/');
     }
   }
