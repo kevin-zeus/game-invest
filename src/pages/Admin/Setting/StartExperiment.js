@@ -27,9 +27,9 @@ class StartExperiment extends Component {
   init = async () => {
     const expeList = await ExperimentService.getAllExperiment();
     const list = expeList.map((r) => ({
-      isStart: r.get('isStart'),
-      name: r.get('name'),
-      id: r.id,
+      isStart: r.isStart,
+      name: r.name,
+      id: r.objectId,
     }));
     this.setState({
       list,

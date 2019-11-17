@@ -1,4 +1,4 @@
-import Bmob from './server';
+import AV from './server';
 
 class File {
   /**
@@ -7,10 +7,12 @@ class File {
    * @param {String} filename
    * @param {Function} onprogress
    */
-  static async upload(localFile, filename) {
+  static async upload(localFile, filename, onprogress) {
     try {
-      const file = Bmob.File(filename, localFile);
-      return file.save();
+      const file = new AV.File(filename, localFile);
+      return file.save({
+        onprogress,
+      });
     } catch (error) {
       throw new Error(error.message);
     }

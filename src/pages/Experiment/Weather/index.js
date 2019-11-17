@@ -29,8 +29,8 @@ class Weather extends Component {
     if (expe.length === 0) {
       expe[0] = await ExperimentService.createExperiment(TYPENAME);
     }
-    const index = await ResultService.getCurrentStep(expe[0].id);
-    if (!expe[0].get('isStart')) { // 如果当前应用没有在后端开启
+    const index = await ResultService.getCurrentStep(expe[0].objectId);
+    if (!expe[0].isStart) { // 如果当前应用没有在后端开启
       history.goBack();
     }
     if (index >= configs.length) {
@@ -39,7 +39,7 @@ class Weather extends Component {
       });
     }
     this.setState({
-      id: expe[0].id,
+      id: expe[0].objectId,
       index,
     });
   }

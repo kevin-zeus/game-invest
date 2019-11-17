@@ -1,4 +1,4 @@
-import Bmob from './server';
+import AV from './server';
 
 class Question {
   /**
@@ -7,9 +7,9 @@ class Question {
    */
   static async getQuestionList(id) {
     try {
-      const Query = Bmob.Query('Question');
+      const Query = new AV.Query('Question');
       const question = await Query.get(id);
-      return question.formList;
+      return question.get('formList');
     } catch (error) {
       throw new Error(error.message);
     }
@@ -22,8 +22,7 @@ class Question {
    */
   static async setQuestionList(id, list) {
     try {
-      const question = Bmob.Query('Question');
-      question.set('id', id);
+      const question = AV.Object.createWithoutData('Question', id);
       question.set('formList', list);
       return question.save();
     } catch (error) {

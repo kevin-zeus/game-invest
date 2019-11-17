@@ -1,4 +1,4 @@
-import Bmob from './server';
+import AV from './server';
 import typeConfig from '../pages/Experiment/config';
 
 class Experiment {
@@ -10,8 +10,8 @@ class Experiment {
   static async getExperimentByType(type) {
     if (typeConfig[type]) {
       try {
-        const query = Bmob.Query('Experiment');
-        query.equalTo('type', '==', type);
+        const query = new AV.Query('Experiment');
+        query.equalTo('type', type);
         return query.find();
       } catch (error) {
         throw new Error(error.message);
@@ -25,7 +25,7 @@ class Experiment {
    */
   static async getAllExperiment() {
     try {
-      const query = Bmob.Query('Experiment');
+      const query = new AV.Query('Experiment');
       return query.find();
     } catch (error) {
       throw new Error(error.message);
@@ -39,8 +39,7 @@ class Experiment {
    */
   static async setIsStartByID(id, status) {
     try {
-      const Expe = Bmob.Query('Experiment');
-      Expe.set('id', id);
+      const Expe = AV.Object.createWithoutData('Experiment', id);
       Expe.set('isStart', status);
       return Expe.save();
     } catch (error) {
@@ -55,9 +54,9 @@ class Experiment {
   static async createExperiment(type) {
     if (typeConfig[type]) {
       try {
-        const ExpeObj = await this.getExperimentByType(type); // 先判断该类型的测试是否存在
+        const ExpeObj = await this.getExperimentByType(type);
         if (ExpeObj.length === 0) {
-          const Expe = Bmob.Query('Experiment');
+          const Expe = new AV.Object('Experiment');
           Expe.set('type', type);
           return Expe.save();
         }
@@ -75,8 +74,7 @@ class Experiment {
    */
   static async changeSound(id, sound) {
     try {
-      const Expe = Bmob.Query('Experiment');
-      Expe.set('id', id);
+      const Expe = AV.Object.createWithoutData('Experiment', id);
       Expe.set('sound', sound);
       return Expe.save();
     } catch (error) {
@@ -90,12 +88,9 @@ class Experiment {
    */
   static async getSounUrl(id) {
     try {
-      const query = Bmob.Query('Experiment');
+      const query = new AV.Query('Experiment');
       const expe = await query.get(id);
-      if (expe.sound) {
-        return expe.sound.url;
-      }
-      return null;
+      return expe.get('sound').get('url');
     } catch (error) {
       throw new Error(error.message);
     }
@@ -108,8 +103,7 @@ class Experiment {
    */
   static async setWords(id, words) {
     try {
-      const Expe = Bmob.Query('Experiment');
-      Expe.set('id', id);
+      const Expe = AV.Object.createWithoutData('Experiment', id);
       Expe.set('words', words);
       return Expe.save();
     } catch (error) {
@@ -123,9 +117,9 @@ class Experiment {
    */
   static async getWords(id) {
     try {
-      const query = Bmob.Query('Experiment');
+      const query = new AV.Query('Experiment');
       const expe = await query.get(id);
-      return expe.words;
+      return expe.get('words');
     } catch (error) {
       throw new Error(error.message);
     }

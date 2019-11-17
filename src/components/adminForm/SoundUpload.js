@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import {
-  Upload, Icon, Button, Progress, message,
+  Upload, Icon, Button, message, Spin,
 } from 'antd';
 
 import FileService from '../../server/File';
@@ -8,7 +8,7 @@ import ExperimentService from '../../server/Experiment';
 
 class SoundUpload extends PureComponent {
   state = {
-    percent: 0,
+    isLoadding: false,
   }
 
   uploadProps = {
@@ -16,36 +16,29 @@ class SoundUpload extends PureComponent {
     beforeUpload: async (file) => {
       const { expeID, onUpload } = this.props;
       this.setState({
-        percent: 0,
+        isLoadding: true,
       });
-      const fileObj = await FileService.upload(file, '', this.onProgress);
-      const expe = await ExperimentService.changeSound(expeID, fileObj);
-      if (expe && expe.id === expeID) {
+      const fileObj = await FileService.upload(file, file.name);
+      const expe = await ExperimentService.changeSound(expeID, fileObj[0]);
+      if (expe) {
         message.success('上传成功');
         await onUpload();
       } else {
         message.error('上传失败');
       }
+      this.setState({
+        isLoadding: false,
+      });
       return false;
     },
     showUploadList: false,
   };
 
-  onProgress = (progress) => {
-    let { percent } = progress;
-    percent = Math.floor(percent);
-    if (percent % 2 === 0) {
-      this.setState({
-        percent,
-      });
-    }
-  }
-
   render() {
-    const { percent } = this.state;
+    const { isLoadding } = this.state;
     const { expeID, soundUrl } = this.props;
     return (
-      <div>
+      <Spin tip="上传中..." spinning={isLoadding} style={{ margin: '20px 0' }}>
         <audio src={soundUrl} controls style={{ border: 0, outline: 'none', margin: '20px 0' }}>
           <track
             default
@@ -64,11 +57,10 @@ class SoundUpload extends PureComponent {
                   上传本次测试的MP3音频文件
                 </Button>
               </Upload>
-              <Progress style={{ display: 'block', maxWidth: 500, margin: '30px 0' }} percent={percent} />
             </div>
           )
         }
-      </div>
+      </Spin>
     );
   }
 }

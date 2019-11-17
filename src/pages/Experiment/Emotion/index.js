@@ -46,8 +46,8 @@ class Emotion extends Component {
     if (expe.length === 0) {
       expe[0] = await ExperimentService.createExperiment(TYPENAME);
     }
-    const index = await ResultService.getCurrentStep(expe[0].id);
-    if (!expe[0].get('isStart')) { // 如果当前应用没有在后端开启
+    const index = await ResultService.getCurrentStep(expe[0].objectId);
+    if (!expe[0].isStart) { // 如果当前应用没有在后端开启
       history.goBack();
     }
     if (index >= configs.length) {
@@ -70,8 +70,32 @@ class Emotion extends Component {
     }, 1000);
 
     this.setState({
-      id: expe[0].id,
+      id: expe[0].objectId,
       index,
+    });
+  }
+
+  handleClick = () => {
+    const { history } = this.props;
+    const { index } = this.state;
+    if (index < configs.length - 1) {
+      this.setState({
+        index: index + 1,
+      });
+    } else {
+      history.push('/');
+    }
+  }
+
+  hideBtn = () => {
+    this.setState({
+      btnMsg: null,
+    });
+  }
+
+  showBtn = (msg = '下一页') => {
+    this.setState({
+      btnMsg: msg,
     });
   }
 

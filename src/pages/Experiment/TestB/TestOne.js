@@ -9,7 +9,7 @@ import ResultService from '../../../server/Result';
 import FormLayout from '../../../components/homeForm/FormLayout';
 import FormTypes from '../../../components/homeForm/formItemTypes';
 
-const questionID = '5dbd551ba91c9300939a3be3';
+const questionID = 'awvx0003';
 
 const MyIcon = Icon.createFromIconfontCN({
   scriptUrl: '//at.alicdn.com/t/font_1493707_561bigr6lmm.js',
@@ -35,9 +35,12 @@ class TestOne extends Component {
 
   init = async () => {
     const { expeID } = this.props;
+    let { words } = this.state;
     try {
       const formList = await QuestionService.getQuestionList(questionID);
-      const words = await ExperimentService.getWords(expeID);
+      if (expeID) {
+        words = await ExperimentService.getWords(expeID);
+      }
       this.setState({
         formList,
         words,

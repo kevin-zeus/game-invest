@@ -1,22 +1,27 @@
 import moment from 'moment';
-import AV from './server';
+import Bmob from './server';
 
 class Result {
   static async addResult(expeID, value, step = 0, { beginTime, endTime } = {}) {
     try {
-      const User = AV.User.current();
+      const User = Bmob.User.current();
 
-      const Experiment = new AV.Query('Experiment');
+      const Experiment = Bmob.Query('Experiment');
       const expe = await Experiment.get(expeID);
+      const PUser = Bmob.Pointer('_User').set(User.objectId);
+      const PExpe = Bmob.Pointer('Experiment').set(expe.objectId);
 
-      const res = new AV.Query('Result');
-      res.equalTo('user', User);
-      res.equalTo('experiment', expe);
-      let result = await res.find();
-      if (!result[0]) {
-        result = AV.Object.createWithoutData('Result');
+      const res = Bmob.Query('Result');
+      res.equalTo('user', '==', PUser);
+      res.equalTo('experiment', '==', PExpe);
+      const result = await res.find();
+
+      const query = Bmob.Query('Result');
+      if (result[0]) {
+        query.set('id', result[0].objectId);
       } else {
-        result = AV.Object.createWithoutData('Result', result[0].id);
+        query.set('user', PUser);
+        query.set('experiment', PExpe);
       }
 
       const tempObj = { ...value };
@@ -33,13 +38,9 @@ class Result {
         tempObj[`${prev}_timespan`] = moment(spanTime).format('mm:ss');
       }
 
-
-      result.set('user', User);
-      result.set('experiment', expe);
-      result.set('step', step);
-      result.addUnique('resultList', tempObj);
-      const newResult = await result.save();
-      return newResult;
+      query.set('step', step);
+      query.addUnique('resultList', [tempObj]);
+      return query.save();
     } catch (error) {
       throw new Error(error.message);
     }
@@ -47,21 +48,22 @@ class Result {
 
   static async getCurrentUserResult(expeID) {
     try {
-      const User = AV.User.current();
+      const User = Bmob.User.current();
 
-      const Experiment = new AV.Query('Experiment');
+      const Experiment = Bmob.Query('Experiment');
       const expe = await Experiment.get(expeID);
+      const PUser = Bmob.Pointer('_User').set(User.objectId);
+      const PExpe = Bmob.Pointer('Experiment').set(expe.objectId);
 
-      const res = new AV.Query('Result');
-      res.equalTo('user', User);
-      res.equalTo('experiment', expe);
+      const res = Bmob.Query('Result');
+      res.equalTo('user', '==', PUser);
+      res.equalTo('experiment', '==', PExpe);
       const result = await res.find();
 
       if (!result[0]) {
         return null;
       }
-      const data = result[0];
-      return data.get('resultList');
+      return result[0].resultList;
     } catch (error) {
       throw new Error(error.message);
     }
@@ -69,22 +71,23 @@ class Result {
 
   static async getAllResult(expeID) {
     try {
-      const Experiment = new AV.Query('Experiment');
+      const Experiment = Bmob.Query('Experiment');
       const expe = await Experiment.get(expeID);
+      const PExpe = Bmob.Pointer('Experiment').set(expe.objectId);
 
-      const res = new AV.Query('Result');
-      res.equalTo('experiment', expe);
+      const res = Bmob.Query('Result');
+      res.equalTo('experiment', '==', PExpe);
       res.include('user');
       const result = await res.find();
 
       if (result) {
         const data = result.map((r) => {
-          const arr = r.get('resultList');
+          const arr = r.resultList;
 
-          const name = r.get('user').get('realName');
-          const schoolID = r.get('user').get('username');
-          const school = r.get('user').get('school');
-          const payment = r.get('user').get('payment');
+          const name = r.user.realname;
+          const schoolID = r.user.username;
+          const { school } = r.user;
+          const { payment } = r.user;
           const o = {};
           o.Name = name;
           o.Student_id = schoolID;
@@ -96,12 +99,13 @@ class Result {
         });
         const cleanData = data.map((item) => {
           const temp = item.reduce((pre, cur) => Object.assign(pre, cur), {});
-          const keys = Object.keys(temp).sort();
-          const newObj = {};
-          for (let i = 0; i < keys.length; i += 1) {
-            newObj[keys[i]] = temp[keys[i]];
-          }
-          return newObj;
+          // const keys = Object.keys(temp).sort();
+          // const newObj = {};
+          // for (let i = 0; i < keys.length; i += 1) {
+          //   newObj[keys[i]] = temp[keys[i]];
+          // }
+          // return newObj;
+          return temp;
         });
         return cleanData;
       }
@@ -113,21 +117,23 @@ class Result {
 
   static async getCurrentStep(expeID) {
     try {
-      const User = AV.User.current();
+      const User = Bmob.User.current();
 
-      const Experiment = new AV.Query('Experiment');
+      const Experiment = Bmob.Query('Experiment');
       const expe = await Experiment.get(expeID);
+      const PUser = Bmob.Pointer('_User').set(User.objectId);
+      const PExpe = Bmob.Pointer('Experiment').set(expe.objectId);
 
-      const res = new AV.Query('Result');
-      res.equalTo('user', User);
-      res.equalTo('experiment', expe);
+      const res = Bmob.Query('Result');
+      res.equalTo('user', '==', PUser);
+      res.equalTo('experiment', '==', PExpe);
       const result = await res.find();
 
       if (!result[0]) {
         return 0;
       }
       const data = result[0];
-      return data.get('step');
+      return data.step;
     } catch (error) {
       throw new Error(error.message);
     }

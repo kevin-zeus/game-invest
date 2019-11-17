@@ -7,7 +7,7 @@ import Types from '../../../components/homeForm/formItemTypes';
 import QuestionService from '../../../server/Question';
 import ResultService from '../../../server/Result';
 
-const questionID = '5dcd15432a6bfd009234c6dc';
+const questionID = 'QFn1L55L';
 const step = 1;
 
 class Survey extends Component {

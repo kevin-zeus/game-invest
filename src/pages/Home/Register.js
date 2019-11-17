@@ -35,9 +35,10 @@ class Register extends Component {
       if (!err) {
         UserService.register(values).then(() => {
           message.success('注册成功！请在登录页进行登录...');
-          history.push('/login');
           this.setState({
             isLoading: false,
+          }, () => {
+            history.push('/login');
           });
         }).catch(() => {
           message.error('学号已经被注册过了，请不要重复注册！');

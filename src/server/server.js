@@ -1,9 +1,8 @@
-import AV from 'leancloud-storage';
+import Bmob from 'hydrogen-js-sdk';
 
-AV.init({
-  appId: '04uaYzzohxoWBqcwnQHQlHkh-gzGzoHsz',
-  appKey: 'RtpAzeDBPwyASwz0OACSVUl5',
-  serverURLs: 'https://game-invest.zeuswk.com',
-});
+Bmob.initialize(
+  '5ba32f5129a2c750',
+  '261123'
+);
 
-export default AV;
+export default Bmob;

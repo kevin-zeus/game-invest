@@ -76,7 +76,7 @@ class FormLayout extends Component {
   getLabel = (label, isHtml) => {
     if (isHtml) {
       return (
-        <div dangerouslySetInnerHTML={{ __html: label }} />
+        <span dangerouslySetInnerHTML={{ __html: label }} />
       );
     }
     return label;

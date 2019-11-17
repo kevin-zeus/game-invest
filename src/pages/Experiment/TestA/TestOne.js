@@ -9,7 +9,7 @@ import ResultService from '../../../server/Result';
 import FormLayout from '../../../components/homeForm/FormLayout';
 import FormTypes from '../../../components/homeForm/formItemTypes';
 
-const questionID = '5dbe4d20a3180b0068f1b226';
+const questionID = 'RUaf444G';
 
 const MyIcon = Icon.createFromIconfontCN({
   scriptUrl: '//at.alicdn.com/t/font_1493707_561bigr6lmm.js',
@@ -24,7 +24,7 @@ class TestOne extends Component {
     canPlay: true,
     formList: null,
     words: null,
-    senconds: 120, // 倒计时120秒
+    senconds: 10, // 倒计时120秒
     disabled: false, // 是否禁用表单项
     hideFormSubmitBtn: false,
   }
@@ -35,9 +35,12 @@ class TestOne extends Component {
 
   init = async () => {
     const { expeID } = this.props;
+    let { words } = this.state;
     try {
       const formList = await QuestionService.getQuestionList(questionID);
-      const words = await ExperimentService.getWords(expeID);
+      if (expeID) {
+        words = await ExperimentService.getWords(expeID);
+      }
       this.setState({
         formList,
         words,

@@ -1,4 +1,4 @@
-import Bmob from './server';
+import AV from './server';
 
 class User {
   /**
@@ -7,14 +7,14 @@ class User {
    */
   static login(params) {
     const { username, password } = params;
-    return Bmob.User.login(username, password);
+    return AV.User.logIn(username, password);
   }
 
   /**
    * 判断是否登录
    */
   static isLogined() {
-    const currentUser = Bmob.User.current();
+    const currentUser = AV.User.current();
     if (currentUser) {
       return true;
     }
@@ -28,17 +28,22 @@ class User {
    * 提醒甲方，如果有同名同姓的人记得在用户名上面区分一下
    */
   static register(params) {
-    // const {
-    //   username, password, realname, school,
-    // } = params;
-    return Bmob.User.register(params);
+    const {
+      username, password, realname, school,
+    } = params;
+    const user = new AV.User();
+    user.setUsername(username);
+    user.setPassword(password);
+    user.set('realName', realname);
+    user.set('school', school);
+    return user.signUp();
   }
 
   /**
    * 退出当前用户
    */
   static logout() {
-    Bmob.User.logout();
+    AV.User.logOut();
   }
 
   /**
@@ -46,7 +51,7 @@ class User {
    */
   static getCurrentUser() {
     if (this.isLogined) {
-      return Bmob.User.current();
+      return AV.User.current();
     }
     return null;
   }
@@ -54,9 +59,7 @@ class User {
   // 设置支付方式
   static async setPayment(str) {
     if (this.isLogined) {
-      const curUser = Bmob.User.current();
-      const user = Bmob.User;
-      user.set('id', curUser.objectId);
+      const user = AV.User.current();
       user.set('payment', str);
       return user.save();
     }

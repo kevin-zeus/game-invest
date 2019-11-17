@@ -27,11 +27,11 @@ class TestA extends Component {
 
   init = async () => {
     const expe = await ExperimentService.getExperimentByType(TYPENAME);
-    if (expe.length === 0) {
+    if (!expe[0]) {
       expe[0] = await ExperimentService.createExperiment(TYPENAME);
     }
     this.setState({
-      id: expe[0].id,
+      id: expe[0].objectId,
     }, async () => {
       await this.getSound();
     });

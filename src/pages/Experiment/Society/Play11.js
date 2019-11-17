@@ -6,7 +6,7 @@ import ResultService from '../../../server/Result';
 import FormLayout from '../../../components/homeForm/FormLayout';
 import FormTypes from '../../../components/homeForm/formItemTypes';
 
-const questionID = '5dc138c512215f0091d7d6ab';
+const questionID = 'S5Ug4114';
 const money = 200;
 const step = 11;
 const num = '八';

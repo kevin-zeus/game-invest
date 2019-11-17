@@ -46,20 +46,20 @@ class Home extends Component {
     history.push(path);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const { history } = this.props;
     if (!UserService.isLogined()) {
       history.push('/login');
     }
     this.init();
-    this.setExpeList();
+    await this.setExpeList();
   }
 
   init = () => {
     const user = UserService.getCurrentUser();
     if (user) {
       this.setState({
-        user: user.attributes,
+        user,
       });
     }
   }
@@ -67,7 +67,7 @@ class Home extends Component {
   setExpeList = async () => {
     const expeList = await ExperimentService.getAllExperiment();
     const types = expeList.map((r) => ([
-      r.get('type'), r.get('isStart'),
+      r.type, r.isStart,
     ]));
     const tempObj = {};
     types.forEach((i) => {
@@ -92,7 +92,7 @@ class Home extends Component {
               user && (
                 <Card style={{ margin: '0 20px' }}>
                   <h3>请查阅您的信息</h3>
-                  <p>姓名：{user.realName}</p>
+                  <p>姓名：{user.realname}</p>
                   <p>学号：{user.username}</p>
                   <p>学校：{user.school}</p>
                   <p>收益方式：

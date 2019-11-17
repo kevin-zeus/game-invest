@@ -7,7 +7,7 @@ import Types from '../../../components/homeForm/formItemTypes';
 import QuestionService from '../../../server/Question';
 import ResultService from '../../../server/Result';
 
-const questionID = '5dcbacc32a6bfd0092336288';
+const questionID = 'C2U7F77F';
 const step = 6;
 
 class Table6 extends Component {

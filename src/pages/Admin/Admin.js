@@ -56,7 +56,7 @@ class Admin extends PureComponent {
   isTeacher() {
     const { history } = this.props;
     const User = UserService.getCurrentUser();
-    if (!User || User.attributes.userType !== 'teacher') {
+    if (!User || User.userType !== 'teacher') {
       history.goBack();
       message.error('对不起，您没有后台权限！');
     }

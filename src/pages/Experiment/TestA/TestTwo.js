@@ -6,7 +6,7 @@ import QuestionService from '../../../server/Question';
 import ResultService from '../../../server/Result';
 import StepLayout from '../../../components/homeForm/StepByStepFormLayout';
 
-const questionID = '5dbe57e617b54d006c866d7a';
+const questionID = 'bEBAKKKS';
 let beginTime = null;
 let endTime = null;
 

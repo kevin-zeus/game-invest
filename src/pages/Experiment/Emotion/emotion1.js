@@ -7,7 +7,7 @@ import FormLayout from '../../../components/homeForm/FormLayout';
 import FormTypes from '../../../components/homeForm/formItemTypes';
 // import ExperimentService from '../../../server/Experiment';
 
-const questionID = '5dc0f89c12215f0091d75522';
+const questionID = 'SXJv2226';
 const step = 1;
 
 class emotion1 extends Component {
@@ -50,7 +50,6 @@ class emotion1 extends Component {
           onSubmit={this.handleSubmit}
           type={FormTypes.EMOTION_RADIO}
           formList={formList}
-          titleIsHtml
           withConfirm={false}
           attr={{
             disabled,

@@ -60,7 +60,7 @@ class WordFormLayout extends Component {
     return (
       <Form layout="inline" onSubmit={this.handleSubmit}>
         {
-          keys.map((k, i) => (
+          formList && keys.map((k, i) => (
             <Form.Item key={k}>
               {
                 getFieldDecorator(`names[${k}]`, {
