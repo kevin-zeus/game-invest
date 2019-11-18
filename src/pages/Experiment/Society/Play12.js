@@ -15,6 +15,8 @@ class Play12 extends Component {
   state = {
     disabled: false,
     formList: null,
+    index: 1,
+    randomMsg: '',
   }
 
   componentDidMount() {
@@ -46,6 +48,7 @@ class Play12 extends Component {
       return;
     }
     let val = values[field]; // 123
+    let randomMsg = '';
 
     const tempObj = {};
     val = parseInt(val, 10);
@@ -57,22 +60,27 @@ class Play12 extends Component {
     switch (a[index]) {
       case 1: {
         payoff = money - val;
+        randomMsg = '你抽到的卡片为数字1，很不幸，你投资的钱都归我们啦！';
         break;
       }
       case 2: {
         payoff = (money - val) + (val * 0.5);
+        randomMsg = '你抽到的卡片为数字2，你投资的钱的一半归我们啦！';
         break;
       }
       case 3: {
         payoff = money;
+        randomMsg = '你抽到的卡片为数字3，你投资的钱我们返还给你！';
         break;
       }
       case 4: {
         payoff = (money - val) + (val * 1.5);
+        randomMsg = '你抽到的卡片为数字4，你投资的钱我们归还给你，再额外给你0.5倍的钱！';
         break;
       }
       case 5: {
         payoff = (money - val) + (val * 2);
+        randomMsg = '你抽到的卡片为数字5，你投资的钱我们归还给你，再额外给你1倍的钱！';
         break;
       }
       default: break;
@@ -94,6 +102,8 @@ class Play12 extends Component {
           message.success('提交成功');
           this.setState({
             disabled: true,
+            index: 2,
+            randomMsg,
           });
           showBtn('结束实验');
         } catch (error) {
@@ -104,29 +114,40 @@ class Play12 extends Component {
   }
 
   render() {
-    const { disabled, formList } = this.state;
+    const {
+      disabled, formList, index, randomMsg,
+    } = this.state;
     return (
       <Card>
         <h3>游戏十二</h3>
-        <FormLayout
-          isDisabled={disabled}
-          onSubmit={this.handleSubmit}
-          type={FormTypes.INPUT}
-          formList={formList}
-          titleIsHtml
-          withConfirm={false}
-          attr={{
-            disabled,
-            placeholder: '博彩金额',
-            money,
-          }}
-          rules={[
-            {
-              required: true,
-              message: '请填写完整',
-            },
-          ]}
-        />
+        {
+          index === 1 && (
+            <FormLayout
+              isDisabled={disabled}
+              onSubmit={this.handleSubmit}
+              type={FormTypes.INPUT}
+              formList={formList}
+              titleIsHtml
+              withConfirm={false}
+              attr={{
+                disabled,
+                placeholder: '博彩金额',
+                money,
+              }}
+              rules={[
+                {
+                  required: true,
+                  message: '请填写完整',
+                },
+              ]}
+            />
+          )
+        }
+        {
+          index === 2 && (
+            <p>{randomMsg}</p>
+          )
+        }
       </Card>
     );
   }

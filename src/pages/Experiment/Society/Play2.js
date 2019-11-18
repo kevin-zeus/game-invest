@@ -27,7 +27,7 @@ class Play2 extends Component {
     const { hideBtn } = this.props;
     hideBtn();
 
-    const no = Math.floor(Math.random() * 100);
+    const no = Math.floor(Math.random() * 90) + 9;
     localStorage.setItem('play2_no', no);
     const formList = await QuestionService.getQuestionList(questionID);
     let title = formList[0].title || '';

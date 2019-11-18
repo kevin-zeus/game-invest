@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Card, message, Modal } from 'antd';
+import {
+  Card, message, Modal, Spin, Button,
+} from 'antd';
 
 import QuestionService from '../../../server/Question';
 import ResultService from '../../../server/Result';
@@ -9,22 +11,27 @@ import FormTypes from '../../../components/homeForm/formItemTypes';
 const questionID = '572k8448';
 const money = 200;
 const step = 9;
+const page = 3;
 
 class Play9 extends Component {
   state = {
     disabled: false,
     formList: null,
+    index: 1,
+    no: null, // 随机的匹配者学号尾号
+    spining: true,
+    showNext: true,
   }
 
   componentDidMount() {
-    this.tip();
+    this.init();
   }
 
   init = async () => {
     const { hideBtn } = this.props;
     hideBtn();
 
-    const no = Math.floor(Math.random() * 100);
+    const no = Math.floor(Math.random() * 90) + 9;
     const formList = await QuestionService.getQuestionList(questionID);
     let title = formList[0].title || '';
     title = title.replace(/{no}/g, no);
@@ -33,20 +40,40 @@ class Play9 extends Component {
     formList[0].title = title;
     this.setState({
       formList,
+      no,
     });
   }
 
-  tip = () => {
-    Modal.info({
-      title: '随机抽取中...',
-      content: (
-        <div>
-          <p>本轮游戏的投资选择为服务器代你或对方投资</p>
-          <p>抽取结果：服务器未选择代你投资</p>
-        </div>
-      ),
-      onOk: this.init,
-    });
+  next = () => {
+    const { index } = this.state;
+    if (index === page - 1) {
+      this.setState({
+        showNext: false,
+      });
+    }
+    if (index < page) {
+      this.setState({
+        index: index + 1,
+      }, () => {
+        this.showAndCloseSpin(2);
+      });
+    }
+  }
+
+  showAndCloseSpin = (cur) => {
+    const { index } = this.state;
+    if (index === cur) {
+      this.setState({
+        showNext: false,
+      });
+      const i = setInterval(() => {
+        this.setState({
+          spining: false,
+          showNext: true,
+        });
+        clearInterval(i);
+      }, 2000);
+    }
   }
 
   handleSubmit = (values) => {
@@ -91,32 +118,87 @@ class Play9 extends Component {
   }
 
   render() {
-    const { disabled, formList } = this.state;
+    const {
+      disabled, formList, no, index, showNext, spining,
+    } = this.state;
     return (
       <Card>
         <h3>游戏九</h3>
-        <FormLayout
-          isDisabled={disabled}
-          onSubmit={this.handleSubmit}
-          type={FormTypes.DOUBLE_INPUT}
-          formList={formList}
-          titleIsHtml
-          withConfirm={false}
-          attr={{
-            disabled,
-            labels: [
-              '猜测服务器代投金额',
-              '你的投入金额',
-            ],
-            money,
-          }}
-          rules={[
-            {
-              required: true,
-              message: '请填写完整',
-            },
-          ]}
-        />
+        {
+          index === 1 && (
+            <p>
+              你现在被随机配对和学号尾号为
+              {no}
+              的同学为一组玩该游戏。
+              <br />
+              我们会给你们每人
+              {money}
+              元，你们可以用这
+              {money}
+              元作为“初始资金” 对一个项目进行投资（0元≤投资额≤
+              {money}
+              元）。
+              <br />
+              但是，我们会在你们两人中随机抽一个，被抽到的同学在本次游戏的投资额由游戏服务器代为做出（即抽到的人本次游戏的投资额由服务器随机从0-
+              {money}
+              元中抽取）。未被抽到的同学决策仍由自己做出。
+              <br />
+              本轮游戏规则已了解的话，点击下一步获得随机抽取结果
+            </p>
+          )
+        }
+        {
+          index === 2 && (
+            <Spin
+              tip="随机抽取中..."
+              style={{
+                backgroundColor: 'white',
+              }}
+              spinning={spining}
+            >
+              <div
+                style={{
+                  minHeight: '54px',
+                  margin: '20px 0',
+                }}
+              >
+              抽取结果：你未被抽中，本轮仍然可以自己选择投入额，而另一位同学则由电脑随机待投。
+                <br />
+              </div>
+            </Spin>
+          )
+        }
+        {
+          index === 3 && (
+            <FormLayout
+              isDisabled={disabled}
+              onSubmit={this.handleSubmit}
+              type={FormTypes.DOUBLE_INPUT}
+              formList={formList}
+              titleIsHtml
+              withConfirm={false}
+              attr={{
+                disabled,
+                labels: [
+                  '猜测服务器代投金额',
+                  '你的投入金额',
+                ],
+                money,
+              }}
+              rules={[
+                {
+                  required: true,
+                  message: '请填写完整',
+                },
+              ]}
+            />
+          )
+        }
+        {
+          showNext && (
+            <Button type="primary" block onClick={this.next}>下一步</Button>
+          )
+        }
       </Card>
     );
   }

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Card, Modal, message } from 'antd';
+import {
+  Card, Modal, message, Button, Spin,
+} from 'antd';
 
 import QuestionService from '../../../server/Question';
 import ResultService from '../../../server/Result';
@@ -9,11 +11,16 @@ import FormTypes from '../../../components/homeForm/formItemTypes';
 const questionID = 'AppoP66P';
 const money = 200;
 const step = 7;
+const page = 3;
 
 class Play7 extends Component {
   state = {
     disabled: false,
     formList: null,
+    index: 1,
+    no: null, // 随机的匹配者学号尾号
+    spining: true,
+    showNext: true,
   }
 
   componentDidMount() {
@@ -24,7 +31,7 @@ class Play7 extends Component {
     const { hideBtn } = this.props;
     hideBtn();
 
-    const no = Math.floor(Math.random() * 100);
+    const no = Math.floor(Math.random() * 90) + 9;
     const formList = await QuestionService.getQuestionList(questionID);
     let title = formList[0].title || '';
     title = title.replace(/{no}/g, no);
@@ -33,6 +40,7 @@ class Play7 extends Component {
     formList[0].title = title;
     this.setState({
       formList,
+      no,
     });
   }
 
@@ -46,18 +54,18 @@ class Play7 extends Component {
       return;
     }
 
-    const value = [];
-    value[`${field}_10times`] = parseInt(value[field], 10);
+    const value = {};
+    value[`${field}_10times`] = parseInt(values[field], 10);
 
     Modal.confirm({
       title: '提示',
-      content: `你的分享钱数是${values[field]}，是否确定？`,
+      content: `你的分享钱数是${values[field]}，是否确认？`,
       okText: '确认提交',
       cancelText: '返回重填',
       onOk: async () => {
         try {
           // 计算玩家收益 20-value
-          value[`${field}_payoff_10times`] = money - value[field];
+          value[`${field}_payoff_10times`] = money - value[`${field}_10times`];
 
           await ResultService.addResult(expeID, value, step);
           message.success('提交成功');
@@ -72,28 +80,123 @@ class Play7 extends Component {
     });
   }
 
+  next = () => {
+    const { index } = this.state;
+    if (index === page - 1) {
+      this.setState({
+        showNext: false,
+      });
+    }
+    if (index < page) {
+      this.setState({
+        index: index + 1,
+      }, () => {
+        this.showAndCloseSpin(2);
+      });
+    }
+  }
+
+  showAndCloseSpin = (cur) => {
+    const { index } = this.state;
+    if (index === cur) {
+      this.setState({
+        showNext: false,
+      });
+      const i = setInterval(() => {
+        this.setState({
+          spining: false,
+          showNext: true,
+        });
+        clearInterval(i);
+      }, 2000);
+    }
+  }
+
   render() {
-    const { disabled, formList } = this.state;
+    const {
+      disabled, formList, index, no, spining, showNext,
+    } = this.state;
     return (
       <Card>
         <h3>游戏七</h3>
-        <FormLayout
-          isDisabled={disabled}
-          onSubmit={this.handleSubmit}
-          type={FormTypes.INPUT}
-          formList={formList}
-          titleIsHtml
-          withConfirm={false}
-          attr={{
-            disabled,
-          }}
-          rules={[
-            {
-              required: true,
-              message: '请填写完整',
-            },
-          ]}
-        />
+        {
+          index === 1 && (
+            <p>
+              你现在被随机配对和学号尾号为
+              {no}
+              的同学为一组玩本游戏。
+              <br />
+              我们给你们每个人
+              {money}
+              元，然后随机选择你们其中一位同学，被选中的同学需要做出以下的决策：
+              <br />
+              你是否愿意将在这
+              {money}
+              元中抽一部分分享给和你配对的同学（0元≤分享额≤
+              {money}
+              元）？
+              <br />
+              假如你分享的金额为c元。那么这一轮，你们各自的收益为：
+              <br />
+              该轮游戏你的收益为：
+              {money}
+              元－你的分享额c
+              <br />
+              该轮游戏他的收益为：
+              {money}
+              元＋你的分享额c
+              <br />
+              本轮游戏规则已了解，点击下一步获得随机抽取结果
+            </p>
+          )
+        }
+        {
+          index === 2 && (
+            <Spin
+              tip="随机抽取中..."
+              style={{
+                backgroundColor: 'white',
+              }}
+              spinning={spining}
+            >
+              <div
+                style={{
+                  minHeight: '54px',
+                  margin: '20px 0',
+                }}
+              >
+              抽取结果：你被抽中啦！
+              点击下一步去设置你愿意分享的钱数。
+              </div>
+            </Spin>
+          )
+        }
+        {
+          index === 3 && (
+            <FormLayout
+              isDisabled={disabled}
+              onSubmit={this.handleSubmit}
+              type={FormTypes.INPUT}
+              formList={formList}
+              titleIsHtml
+              withConfirm={false}
+              attr={{
+                disabled,
+              }}
+              rules={[
+                {
+                  required: true,
+                  message: '请填写完整',
+                },
+              ]}
+            />
+          )
+        }
+        {
+          showNext && (
+            <Button type="primary" block onClick={this.next}>下一步</Button>
+          )
+        }
       </Card>
     );
   }
