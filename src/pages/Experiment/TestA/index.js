@@ -40,8 +40,7 @@ class TestA extends Component {
       });
     }
 
-    let expeComped = localStorage.getItem('expe');
-    expeComped = JSON.parse(expeComped);
+    const expeComped = await ResultService.getCurrentUserResult();
     if (!expeComped || !expeComped.weather) {
       message.warn('请先完成实验W');
       history.goBack();
@@ -63,14 +62,15 @@ class TestA extends Component {
     });
   }
 
-  handleClick = () => {
+  handleClick = async () => {
     const { history } = this.props;
-    const { index } = this.state;
+    const { index, id } = this.state;
     if (index < configs.length - 1) {
       this.setState({
         index: index + 1,
       });
     } else {
+      await ResultService.setComplete(id);
       history.push('/');
     }
   }

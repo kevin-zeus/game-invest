@@ -75,15 +75,15 @@ class Emotion extends Component {
     });
   }
 
-  handleClick = () => {
+  handleClick = async () => {
     const { history } = this.props;
-    const { index } = this.state;
+    const { index, id } = this.state;
     if (index < configs.length - 1) {
       this.setState({
         index: index + 1,
       });
     } else {
-      localStorage.setItem('expe', JSON.stringify({ emotion: true }));
+      await ResultService.setComplete(id);
       history.push('/');
     }
   }

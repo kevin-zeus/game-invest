@@ -24,6 +24,7 @@ class Result {
         query.set('experiment', PExpe);
         query.set('student', User.realname);
         query.set('expename', expe.name);
+        query.set('expetype', expe.type);
       }
 
       const tempObj = { ...value };
@@ -48,26 +49,51 @@ class Result {
     }
   }
 
-  static async getCurrentUserResult(expeID) {
+  static async getCurrentUserResult() {
     try {
       const User = Bmob.User.current();
-
-      const Experiment = Bmob.Query('Experiment');
-      const expe = await Experiment.get(expeID);
       const PUser = Bmob.Pointer('_User').set(User.objectId);
-      const PExpe = Bmob.Pointer('Experiment').set(expe.objectId);
 
       const res = Bmob.Query('Result');
       res.equalTo('user', '==', PUser);
-      res.equalTo('experiment', '==', PExpe);
       const result = await res.find();
 
-      if (!result[0]) {
+      if (result.length === 0) {
         return null;
       }
-      return result[0].resultList;
+      let data = result.filter((r) => r.isComplete);
+      data = data.reduce((pre, cur) => {
+        const temp = { ...pre };
+        temp[cur.expetype] = true;
+        return temp;
+      }, {});
+      return data;
     } catch (error) {
       throw new Error(error.message);
+    }
+  }
+
+  // eslint-disable-next-line consistent-return
+  static async setComplete(expeID) {
+    try {
+      const User = Bmob.User.current();
+      const PUser = Bmob.Pointer('_User').set(User.objectId);
+      const PExpe = Bmob.Pointer('Experiment').set(expeID);
+
+      const query = Bmob.Query('Result');
+      query.equalTo('user', '==', PUser);
+      query.equalTo('experiment', '==', PExpe);
+
+      const res = await query.find();
+      if (!res[0]) {
+        return null;
+      }
+
+      query.set('id', res[0].objectId);
+      query.set('isComplete', true);
+      return query.save();
+    } catch (error) {
+      console.error(error);
     }
   }
 

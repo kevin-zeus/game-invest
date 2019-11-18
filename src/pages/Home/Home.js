@@ -11,6 +11,7 @@ import RouterConfig from '../Experiment/router';
 
 import UserService from '../../server/User';
 import ExperimentService from '../../server/Experiment';
+import ResultService from '../../server/Result';
 
 const { Content } = Layout;
 const WrapLayout = styled(Layout)`
@@ -87,6 +88,21 @@ class Home extends Component {
     });
     this.setState({
       expeStartList: tempObj,
+    }, async () => {
+      const { expeStartList } = this.state;
+      const expe = await ResultService.getCurrentUserResult();
+      if (expe) {
+        const temp = { ...expeStartList };
+        const keys = Object.keys(expeStartList);
+        keys.forEach((type) => {
+          if (expe[type]) {
+            temp[type] = false;
+          }
+        });
+        this.setState({
+          expeStartList: temp,
+        });
+      }
     });
   }
 
