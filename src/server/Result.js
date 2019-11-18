@@ -166,6 +166,22 @@ class Result {
       throw new Error(error.message);
     }
   }
+
+  static async clearData(userID, expetype) {
+    const PUser = Bmob.Pointer('_User').set(userID);
+    const query = Bmob.Query('Result');
+    query.equalTo('user', '==', PUser);
+    query.equalTo('expetype', '==', expetype);
+    const res = await query.find();
+    if (res[0]) {
+      query.set('id', res[0].objectId);
+      query.set('isComplete', false);
+      query.set('step', 0);
+      query.set('resultList', []);
+      return query.save();
+    }
+    return null;
+  }
 }
 
 export default Result;

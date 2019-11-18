@@ -62,6 +62,14 @@ class User {
     }
     return null;
   }
+
+  static async getUserBySchoolID(username) {
+    const query = Bmob.Query('_User');
+    query.equalTo('username', '==', username);
+    const user = await query.find();
+    if (user[0]) return user[0];
+    return null;
+  }
 }
 
 export default User;
