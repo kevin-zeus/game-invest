@@ -57,6 +57,11 @@ class Survey extends Component {
 
   handleSubmit = async (values) => {
     const { expeID, showBtn } = this.props;
+    const { time } = this.state;
+    if (time !== 0) {
+      message.error(`对不起，请等待${time}秒后再提交`);
+      return;
+    }
     try {
       await ResultService.addResult(expeID, values, step);
       showBtn('已结束，返回首页');
