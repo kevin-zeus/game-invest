@@ -52,7 +52,7 @@ class Play9 extends Component {
     tempObj[`${field}_guess_10times`] = guessValue; // 玩家猜测的值
     tempObj[`${field}_computer_10times`] = otherRealValue; // 服务器模拟的值
     tempObj[`${field}_payoff_10times`] = 0.8 * (value + otherRealValue) + (20 - value); // 玩家收益
-    tempObj[`${field}_guess_payoff_10times`] = 20 - Math.abs(guessValue - otherRealValue); // 玩家猜测收益
+    tempObj[`${field}_guess_payoff_10times`] = money - Math.abs(guessValue - otherRealValue); // 玩家猜测收益
 
     tempObj[`${field}_payoff_10times`] = tempObj[`${field}_payoff_10times`].toFixed(2);
     tempObj[`${field}_guess_payoff_10times`] = tempObj[`${field}_guess_payoff_10times`].toFixed(2);

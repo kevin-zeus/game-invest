@@ -58,7 +58,7 @@ class Play2 extends Component {
     tempObj[`${field}`] = value; // 玩家填的值
     tempObj[`${field}_guess`] = guessValue; // 玩家猜测的值
     tempObj[`${field}_payoff`] = 0.8 * (value + otherRealValue) + (20 - value); // 玩家收益
-    tempObj[`${field}_guess_payoff`] = 20 - Math.abs(guessValue - otherRealValue); // 玩家猜测收益
+    tempObj[`${field}_guess_payoff`] = money - Math.abs(guessValue - otherRealValue); // 玩家猜测收益
 
     tempObj[`${field}_payoff`] = tempObj[`${field}_payoff`].toFixed(2);
     tempObj[`${field}_guess_payoff`] = tempObj[`${field}_guess_payoff`].toFixed(2);
