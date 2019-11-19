@@ -15,7 +15,12 @@ class DoubleInput extends Component {
   // 通知Form组件该项有更改
   emitChange = () => {
     const { onChange } = this.props;
+    const { guessValue, value } = this.state;
     if (typeof onChange === 'function') {
+      if (!guessValue || !value) {
+        onChange();
+        return;
+      }
       onChange(this.state);
     }
   }

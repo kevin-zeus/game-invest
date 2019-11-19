@@ -55,14 +55,23 @@ class TestB extends Component {
     });
   }
 
-  handleClick = () => {
+  handleClick = async () => {
     const { history } = this.props;
-    const { index } = this.state;
+    const { index, id } = this.state;
     if (index < configs.length - 1) {
       this.setState({
         index: index + 1,
       });
     } else {
+      await ResultService.setComplete(id);
+      const date = new Date();
+      const temp = {};
+      temp['游戏结束提交时间（年）'] = date.getFullYear();
+      temp['游戏结束提交时间（月）'] = date.getMonth() + 1;
+      temp['游戏结束提交时间（日）'] = date.getDate();
+      temp['游戏结束提交时间（时刻）'] = date.getHours();
+      temp['游戏结束提交时间（分）'] = date.getMinutes() + 1;
+      await ResultService.addResult(id, temp, 4);
       history.push('/');
     }
   }
