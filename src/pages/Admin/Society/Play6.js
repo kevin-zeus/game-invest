@@ -8,6 +8,7 @@ class Play6 extends PureComponent {
   render() {
     return (
       <div>
+        <h3 style={{ color: 'red' }}>游戏五和游戏十二的题目</h3>
         <p>money：金额，result：题目中的例题计算结果</p>
         <FormLayout
           type={types.ADMIN_FIELD_INPUT}

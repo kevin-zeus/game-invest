@@ -44,22 +44,22 @@ class Society extends Component {
         <TabPane tab="导出数据" key="0">
           <ExportExcel expeID={id} />
         </TabPane>
-        <TabPane tab="游戏1" key="1">
+        <TabPane tab="游戏1和游戏6" key="1">
           <Play1 />
         </TabPane>
-        <TabPane tab="游戏2" key="2">
+        <TabPane tab="游戏2和游戏7" key="2">
           <Play2 />
         </TabPane>
-        <TabPane tab="游戏3" key="3">
+        <TabPane tab="游戏3和游戏8" key="3">
           <Play3 />
         </TabPane>
-        <TabPane tab="游戏4" key="4">
+        <TabPane tab="游戏4和游戏9" key="4">
           <Play4 />
         </TabPane>
-        <TabPane tab="游戏5" key="5">
+        <TabPane tab="游戏10和游戏11" key="5">
           <Play5 />
         </TabPane>
-        <TabPane tab="游戏6" key="6">
+        <TabPane tab="游戏5和游戏12" key="6">
           <Play6 />
         </TabPane>
       </Tabs>
