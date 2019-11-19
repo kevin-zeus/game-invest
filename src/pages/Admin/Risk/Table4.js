@@ -17,7 +17,6 @@ class Table1 extends Component {
         <FormLayout
           type={Types.RADIO_CHECKBOX}
           questionID={questionID}
-          max={10}
         />
       </div>
     );
