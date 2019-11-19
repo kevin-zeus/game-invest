@@ -43,7 +43,7 @@ class Play4 extends Component {
     const val = { ...values[field] }; // {guessValue, value}
 
     const tempObj = {};
-    const otherRealValue = Math.floor(Math.random() * 20); // 服务器模拟的对方真实值
+    const otherRealValue = Math.floor(Math.random() * money); // 服务器模拟的对方真实值
     let { value, guessValue } = val;
     value = parseInt(value, 10);
     guessValue = parseInt(guessValue, 10);
