@@ -33,11 +33,14 @@ class emotion1 extends Component {
       try {
         await ResultService.addResult(expeID, values, step);
         message.success('你已完成该实验，谢谢参与');
+        this.setState({
+          disabled: true,
+        });
+        showBtn('结束实验');
       } catch (error) {
         console.error(error);
       }
     }
-    showBtn('结束实验');
   }
 
 
@@ -54,6 +57,12 @@ class emotion1 extends Component {
           attr={{
             disabled,
           }}
+          rules={[
+            {
+              required: true,
+              message: '请先完成该项',
+            },
+          ]}
         />
       </Card>
     );
