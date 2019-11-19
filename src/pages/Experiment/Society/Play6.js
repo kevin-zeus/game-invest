@@ -1,22 +1,26 @@
 import React, { Component } from 'react';
-import { Card, message, Modal } from 'antd';
+import {
+  Card, Modal, message, Button, Spin,
+} from 'antd';
 
 import QuestionService from '../../../server/Question';
 import ResultService from '../../../server/Result';
 import FormLayout from '../../../components/homeForm/FormLayout';
 import FormTypes from '../../../components/homeForm/formItemTypes';
 
-const questionID = 'fp5Kmiim';
-const money = 20;
+const questionID = 'AppoP66P';
+const money = 200;
 const step = 6;
-const result = 25; // (20 - 10) + 10 * 1.5 = 25
+const page = 3;
 
 class Play6 extends Component {
   state = {
     disabled: false,
     formList: null,
     index: 1,
-    randomMsg: '',
+    no: null, // 随机的匹配者学号尾号
+    spining: true,
+    showNext: true,
   }
 
   componentDidMount() {
@@ -27,83 +31,46 @@ class Play6 extends Component {
     const { hideBtn } = this.props;
     hideBtn();
 
+    const no = Math.floor(Math.random() * 90) + 9;
     const formList = await QuestionService.getQuestionList(questionID);
     let title = formList[0].title || '';
+    title = title.replace(/{no}/g, no);
     title = title.replace(/{money}/g, money);
-    title = title.replace(/{result}/g, result);
     title = title.replace(/\n/g, '<br/>');
     formList[0].title = title;
     this.setState({
       formList,
+      no,
     });
   }
 
   handleSubmit = (values) => {
-    // values 为 {PGC: '123'}
     const { expeID, showBtn } = this.props;
     const { formList } = this.state;
     const { field } = formList[0];
+
     if (+values[field] < 0 || +values[field] > money || !values[field]) {
-      message.error('金额不能为空且必须为0~200的数字');
+      message.error(`金额不能为空且必须为0~${money}的数字`);
       return;
     }
-    let val = values[field]; // 123
-    let randomMsg = '';
 
-    const tempObj = {};
-    val = parseInt(val, 10);
-
-    // 随机计算方式：
-    const a = [1, 2, 3, 4, 5];
-    const index = Math.floor(Math.random() * 5);
-    let payoff = 0;
-    switch (a[index]) {
-      case 1: {
-        payoff = money - val;
-        randomMsg = '你抽到的卡片为数字1，很不幸，你投资的钱都归我们啦！';
-        break;
-      }
-      case 2: {
-        payoff = (money - val) + (val * 0.5);
-        randomMsg = '你抽到的卡片为数字2，你投资的钱的一半归我们啦！';
-        break;
-      }
-      case 3: {
-        payoff = money;
-        randomMsg = '你抽到的卡片为数字3，你投资的钱我们返还给你！';
-        break;
-      }
-      case 4: {
-        payoff = (money - val) + (val * 1.5);
-        randomMsg = '你抽到的卡片为数字4，你投资的钱我们归还给你，再额外给你0.5倍的钱！';
-        break;
-      }
-      case 5: {
-        payoff = (money - val) + (val * 2);
-        randomMsg = '你抽到的卡片为数字5，你投资的钱我们归还给你，再额外给你1倍的钱！';
-        break;
-      }
-      default: break;
-    }
-
-    tempObj.riskinvest = val; // 玩家填的值
-    tempObj.riskinvest_payoff = payoff;
-
-    tempObj.riskinvest_payoff = tempObj.riskinvest_payoff.toFixed(2);
+    const value = {};
+    value[`${field}_10times`] = parseInt(values[field], 10);
 
     Modal.confirm({
       title: '提示',
-      content: `请确认你的博彩金额为${val}元`,
+      content: `你的分享钱数是${values[field]}，是否确认？`,
       okText: '确认提交',
       cancelText: '返回重填',
       onOk: async () => {
         try {
-          await ResultService.addResult(expeID, tempObj, step);
+          // 计算玩家收益 20-value
+          value[`${field}_payoff_10times`] = money - value[`${field}_10times`];
+
+          await ResultService.addResult(expeID, value, step);
           message.success('提交成功');
           this.setState({
             disabled: true,
-            index: 2,
-            randomMsg,
           });
           showBtn();
         } catch (error) {
@@ -113,15 +80,99 @@ class Play6 extends Component {
     });
   }
 
+  next = () => {
+    const { index } = this.state;
+    if (index === page - 1) {
+      this.setState({
+        showNext: false,
+      });
+    }
+    if (index < page) {
+      this.setState({
+        index: index + 1,
+      }, () => {
+        this.showAndCloseSpin(2);
+      });
+    }
+  }
+
+  showAndCloseSpin = (cur) => {
+    const { index } = this.state;
+    if (index === cur) {
+      this.setState({
+        showNext: false,
+      });
+      const i = setInterval(() => {
+        this.setState({
+          spining: false,
+          showNext: true,
+        });
+        clearInterval(i);
+      }, 2000);
+    }
+  }
+
   render() {
     const {
-      disabled, formList, index, randomMsg,
+      disabled, formList, index, no, spining, showNext,
     } = this.state;
     return (
       <Card>
         <h3>游戏六</h3>
         {
           index === 1 && (
+            <p>
+              你现在被随机配对和学号尾号为
+              {no}
+              的同学为一组玩本游戏。
+              <br />
+              我们给你们每个人
+              {money}
+              元，然后随机选择你们其中一位同学，被选中的同学需要做出以下的决策：
+              <br />
+              你是否愿意将在这
+              {money}
+              元中抽一部分分享给和你配对的同学（0元≤分享额≤
+              {money}
+              元）？
+              <br />
+              假如你分享的金额为c元。那么这一轮，你们各自的收益为：
+              <br />
+              该轮游戏你的收益为：
+              {money}
+              元－你的分享额c
+              <br />
+              该轮游戏他的收益为：
+              {money}
+              元＋你的分享额c
+              <br />
+              本轮游戏规则已了解，点击下一步获得随机抽取结果
+            </p>
+          )
+        }
+        {
+          index === 2 && (
+            <Spin
+              tip="随机抽取中..."
+              style={{
+                backgroundColor: 'white',
+              }}
+              spinning={spining}
+            >
+              <div
+                style={{
+                  minHeight: '54px',
+                  margin: '20px 0',
+                }}
+              >
+              抽取结果：你被抽中啦！
+              点击下一步去设置你愿意分享的钱数。
+              </div>
+            </Spin>
+          )
+        }
+        {
+          index === 3 && (
             <FormLayout
               isDisabled={disabled}
               onSubmit={this.handleSubmit}
@@ -131,8 +182,6 @@ class Play6 extends Component {
               withConfirm={false}
               attr={{
                 disabled,
-                placeholder: '博彩金额',
-                money,
               }}
               rules={[
                 {
@@ -144,8 +193,8 @@ class Play6 extends Component {
           )
         }
         {
-          index === 2 && (
-            <p>{randomMsg}</p>
+          showNext && (
+            <Button type="primary" block onClick={this.next}>下一步</Button>
           )
         }
       </Card>

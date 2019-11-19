@@ -44,7 +44,7 @@ class Play12 extends Component {
     const { formList } = this.state;
     const { field } = formList[0];
     if (+values[field] < 0 || +values[field] > money || !values[field]) {
-      message.error('金额不能为空且必须为0~200的数字');
+      message.error(`金额不能为空且必须为0~${money}的数字`);
       return;
     }
     let val = values[field]; // 123

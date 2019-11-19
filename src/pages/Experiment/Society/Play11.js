@@ -7,9 +7,9 @@ import FormLayout from '../../../components/homeForm/FormLayout';
 import FormTypes from '../../../components/homeForm/formItemTypes';
 
 const questionID = 'S5Ug4114';
-const money = 200;
+const money = 20;
 const step = 11;
-const num = '八';
+const num = '二';
 
 class Play11 extends Component {
   state = {
@@ -65,7 +65,7 @@ class Play11 extends Component {
     const { formList } = this.state;
     const { field } = formList[0];
     if (+values[field] < 0 || +values[field] > money || !values[field]) {
-      message.error('金额不能为空且必须为0~200的数字');
+      message.error(`金额不能为空且必须为0~${money}的数字`);
       return;
     }
 
@@ -76,10 +76,10 @@ class Play11 extends Component {
     val = parseInt(val, 10);
     otherValue = parseInt(otherValue, 10);
 
-    tempObj[`${field}${step}_10times`] = val; // 玩家填的值
-    tempObj[`${field}${step}_payoff_10times`] = 0.8 * (val + otherValue) + (20 - val); // 玩家收益
+    tempObj[`${field}`] = val; // 玩家填的值
+    tempObj[`${field}_payoff`] = 0.8 * (val + otherValue) + (20 - val); // 玩家收益
 
-    tempObj[`${field}${step}_payoff_10times`] = tempObj[`${field}${step}_payoff_10times`].toFixed(2);
+    tempObj[`${field}_payoff`] = tempObj[`${field}_payoff`].toFixed(2);
 
     Modal.confirm({
       title: '提示',
