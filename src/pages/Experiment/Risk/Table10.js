@@ -13,7 +13,7 @@ const step = 10;
 class Table10 extends Component {
   state = {
     formList: null,
-    time: 30,
+    time: 10,
     disabled: false,
   }
 
@@ -82,7 +82,7 @@ class Table10 extends Component {
         <p>
         同样以下这个游戏有
           {formList && formList.length}
-        个选项。在做这个游戏前，我们额外支付0.6美元给你，计入你的总收益，以感谢你所付出的时间。同样，半分钟倒计时结束后才可以提交，在确认提交之前你都可以修改
+        个选项。在做这个游戏前，我们额外支付0.6美元给你，计入你的总收益，以感谢你所付出的时间。同样，10s倒计时结束后才可以提交，在确认提交之前你都可以修改
         </p>
         <h3>
           倒计时剩余

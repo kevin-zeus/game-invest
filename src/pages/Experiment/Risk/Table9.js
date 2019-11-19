@@ -13,7 +13,7 @@ const step = 9;
 class Table9 extends Component {
   state = {
     formList: null,
-    time: 30,
+    time: 10,
     disabled: false,
   }
 
@@ -82,7 +82,7 @@ class Table9 extends Component {
         <p>
           该页中有
           {formList && formList.length}
-          个小游戏，每个小游戏提供了五个含有几率收益的选项，请你根据自己的偏好，选出每个小游戏你偏好的选项。半分钟倒计时结束后才可提交，在确认提交之前你都可以修改
+          个小游戏，每个小游戏提供了五个含有几率收益的选项，请你根据自己的偏好，选出每个小游戏你偏好的选项。10s倒计时结束后才可提交，在确认提交之前你都可以修改
         </p>
         <h3>
           倒计时剩余
