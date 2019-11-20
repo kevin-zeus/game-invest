@@ -13,7 +13,7 @@ const step = 1;
 class Survey extends Component {
   state = {
     formList: null,
-    time: 180,
+    time: 60,
     disabled: false,
   }
 
@@ -79,7 +79,7 @@ class Survey extends Component {
     return (
       <Card>
         <p>
-          该问卷至少需要3分钟才可提交，请在倒计时结束后再提交
+          该问卷至少需要1分钟后才可提交，请在倒计时结束后再提交
         </p>
         <h3>
           倒计时剩余
