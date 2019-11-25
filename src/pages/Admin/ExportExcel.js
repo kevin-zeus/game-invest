@@ -10,7 +10,11 @@ class ExportExcel extends Component {
 
   handleClick = async () => {
     const { expeID } = this.props;
-    await XlsxService.exportResult(expeID);
+    if (expeID) {
+      await XlsxService.exportResult(expeID);
+    } else {
+      console.error('expeID不存在');
+    }
   }
 
   render() {

@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 import moment from 'moment';
 import Bmob from './server';
 
@@ -104,11 +105,30 @@ class Result {
       const PExpe = Bmob.Pointer('Experiment').set(expe.objectId);
 
       const res = Bmob.Query('Result');
-      res.equalTo('experiment', '==', PExpe);
-      res.include('user');
-      const result = await res.find();
 
-      if (result) {
+      res.equalTo('experiment', '==', PExpe);
+      // 获取一共多少条数据
+      const limit = 10;
+      const count = await res.count();
+      let length = parseInt(count / limit, 10); // 分段循环多少次？
+      if (count % limit) {
+        length += 1;
+      }
+
+      let result = [];
+      for (let i = 0; i <= length; i += 1) {
+        res.include('user');
+        res.equalTo('experiment', '==', PExpe);
+        res.skip(i * limit);
+        res.limit(limit);
+        if (result.length === 0) {
+          result = await res.find();
+        } else {
+          result = result.concat(await res.find());
+        }
+      }
+
+      if (result.length !== 0) {
         const data = result.map((r) => {
           const arr = r.resultList;
 
