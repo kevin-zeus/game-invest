@@ -77,7 +77,7 @@ class Play10 extends Component {
     otherValue = parseInt(otherValue, 10);
 
     tempObj[`${field}_10times`] = val; // 玩家填的值
-    tempObj[`${field}_payoff_10times`] = 0.8 * (val + otherValue) + (20 - val); // 玩家收益
+    tempObj[`${field}_payoff_10times`] = 0.8 * (val + otherValue) + (money - val); // 玩家收益
 
     tempObj[`${field}_payoff_10times`] = tempObj[`${field}_payoff_10times`].toFixed(2);
 
