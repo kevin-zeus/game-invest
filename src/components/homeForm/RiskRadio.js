@@ -7,7 +7,7 @@
 import React, { Component } from 'react';
 import { Radio } from 'antd';
 
-const reg = /\d+(.\d+)?%?/g;
+const reg = /-?\d+(.\d+)?%?/g;
 
 class RiskRadio extends Component {
   state = {
@@ -35,6 +35,7 @@ class RiskRadio extends Component {
       }
       return obj;
     });
+    // console.log(results);
     this.setState({
       results,
     });
@@ -44,7 +45,6 @@ class RiskRadio extends Component {
   emitChange = (value) => {
     const { onChange, options } = this.props;
     const { radioValue } = this.state;
-    // 汇率换算
     const val = (value * 7.12).toFixed(2);
     // console.log(`概率下获取金额：${val} = (${value} * 7.12)`);
     if (typeof onChange === 'function') {
@@ -53,23 +53,25 @@ class RiskRadio extends Component {
         options[radioValue].substr(0, 1),
       ]);
     }
+    // console.log('计算后的概率取值', [value, options[radioValue].substr(0, 1)]);
   }
 
   handleChange = (e) => {
     const { value: index } = e.target;
     const { results } = this.state;
     const tempObj = results[index];
-    let { prob } = tempObj;
+    const { prob } = tempObj;
     const { dollar } = tempObj;
-    prob = prob.sort();
+    const newProb = prob.sort();
 
     const randonDollarIndex = Math.floor(Math.random() * dollar.length);
     let result = dollar[randonDollarIndex]; // 防止随机概率为0
 
     const random = Math.floor(Math.random() * 100);
     for (let i = 0; i < prob.length; i += 1) {
-      if (random < +prob[i]) {
-        result = dollar[i];
+      if (random < +newProb[i]) {
+        const j = prob.indexOf(newProb[i]);
+        result = dollar[j];
         break;
       }
     }
