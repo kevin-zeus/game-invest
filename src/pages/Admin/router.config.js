@@ -34,15 +34,15 @@ export default [
     icon: 'snippets',
   },
   {
-    menu: '亲社会实验',
-    path: '/society',
-    component: Society,
-    icon: 'snippets',
-  },
-  {
     menu: '【预】风险偏好',
     path: '/pre-risk',
     component: PreRisk,
+    icon: 'snippets',
+  },
+  {
+    menu: '亲社会实验',
+    path: '/society',
+    component: Society,
     icon: 'snippets',
   },
   {
