@@ -52,6 +52,14 @@ const expeList = [
     value: 'emotion',
     label: '情绪调查',
   },
+  {
+    value: 'pre_society',
+    label: '【预】亲社会偏好',
+  },
+  {
+    value: 'pre_risk',
+    label: '【预】风险偏好',
+  },
 ];
 
 class ClearUserResult extends Component {
