@@ -6,13 +6,13 @@ import configs from './test.config';
 import ExperimentService from '../../../server/Experiment';
 import ResultService from '../../../server/Result'; // 获取step限制已经填过的内容不可再填
 
-const TYPENAME = 'society';
+const TYPENAME = 'pre_risk';
 
 const Wrap = styled.div`
   padding: 20px 16px;
 `;
 
-class Society extends Component {
+class Risk extends Component {
   state = {
     btnMsg: '',
     index: 0,
@@ -40,8 +40,8 @@ class Society extends Component {
     }
 
     const expeComped = await ResultService.getCurrentUserResult();
-    if (!expeComped || !expeComped.pre_risk) {
-      message.warn('请先完成实验R-预');
+    if (!expeComped || !expeComped.pre_society) {
+      message.warn('请先完成实验S-预');
       history.goBack();
     }
 
@@ -60,7 +60,6 @@ class Society extends Component {
       });
     } else {
       await ResultService.setComplete(id);
-
       const date = new Date();
       const temp = {};
       temp['游戏结束提交时间（年）'] = date.getFullYear();
@@ -68,8 +67,7 @@ class Society extends Component {
       temp['游戏结束提交时间（日）'] = date.getDate();
       temp['游戏结束提交时间（时刻）'] = date.getHours();
       temp['游戏结束提交时间（分）'] = date.getMinutes() + 1;
-      await ResultService.addResult(id, temp, 12);
-
+      await ResultService.addResult(id, temp, 1);
       history.push('/');
     }
   }
@@ -80,7 +78,7 @@ class Society extends Component {
     });
   }
 
-  showBtn = (msg = '下一个游戏') => {
+  showBtn = (msg = '下一页') => {
     this.setState({
       btnMsg: msg,
     });
@@ -92,7 +90,8 @@ class Society extends Component {
     } = this.state;
     return (
       <Wrap>
-        <h1>实验S</h1>
+        <h1>实验R-预</h1>
+        <p>注意：人民币对美元汇率为：1美元=7.12元人民币</p>
         <div>
           {
             configs.map((item, i) => (
@@ -124,4 +123,4 @@ class Society extends Component {
   }
 }
 
-export default Society;
+export default Risk;

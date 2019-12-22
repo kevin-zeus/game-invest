@@ -135,7 +135,7 @@ class Home extends Component {
             }
             {
               expeStartList
-                ? !expeStartList.test_b && <p style={{ padding: '20px 20px', color: 'red' }}>请按照实验E-S-R-W-A的顺序依次开始实验</p>
+                ? !expeStartList.test_b && <p style={{ padding: '20px 20px', color: 'red' }}>请按照实验E-S预-R预-S-R-W-A的顺序依次开始实验</p>
                 : ''
             }
             {

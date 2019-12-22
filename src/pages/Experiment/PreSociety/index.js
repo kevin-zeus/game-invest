@@ -6,7 +6,7 @@ import configs from './test.config';
 import ExperimentService from '../../../server/Experiment';
 import ResultService from '../../../server/Result'; // 获取step限制已经填过的内容不可再填
 
-const TYPENAME = 'society';
+const TYPENAME = 'pre_society';
 
 const Wrap = styled.div`
   padding: 20px 16px;
@@ -40,8 +40,8 @@ class Society extends Component {
     }
 
     const expeComped = await ResultService.getCurrentUserResult();
-    if (!expeComped || !expeComped.pre_risk) {
-      message.warn('请先完成实验R-预');
+    if (!expeComped || !expeComped.emotion) {
+      message.warn('请先完成实验E');
       history.goBack();
     }
 
@@ -68,7 +68,7 @@ class Society extends Component {
       temp['游戏结束提交时间（日）'] = date.getDate();
       temp['游戏结束提交时间（时刻）'] = date.getHours();
       temp['游戏结束提交时间（分）'] = date.getMinutes() + 1;
-      await ResultService.addResult(id, temp, 12);
+      await ResultService.addResult(id, temp, 4);
 
       history.push('/');
     }
@@ -92,7 +92,7 @@ class Society extends Component {
     } = this.state;
     return (
       <Wrap>
-        <h1>实验S</h1>
+        <h1>实验S-预</h1>
         <div>
           {
             configs.map((item, i) => (

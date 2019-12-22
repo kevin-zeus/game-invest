@@ -1,5 +1,7 @@
 import TestA from './TestA';
 import TestB from './TestB';
+import PreSociety from './PreSociety';
+import PreRisk from './PreRisk';
 import Society from './Society';
 import Risk from './Risk';
 import Weather from './Weather';
@@ -17,6 +19,18 @@ export default [
     component: Emotion,
     name: '实验E',
     type: 'emotion',
+  },
+  {
+    path: '/pre-society',
+    component: PreSociety,
+    name: '实验S-预',
+    type: 'pre_society',
+  },
+  {
+    path: '/pre-risk',
+    component: PreRisk,
+    name: '实验R-预',
+    type: 'pre_risk',
   },
   {
     path: '/society',

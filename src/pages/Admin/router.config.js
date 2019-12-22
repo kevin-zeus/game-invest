@@ -2,6 +2,8 @@ import TestA from './TestA';
 import TestB from './TestB';
 import Emotion from './Emotion';
 import Setting from './Setting';
+import PreSociety from './PreSociety';
+import PreRisk from './PreRisk';
 import Society from './Society';
 import Risk from './Risk';
 import Weather from './Weather';
@@ -26,9 +28,21 @@ export default [
     icon: 'snippets',
   },
   {
+    menu: '【预】亲社会实验',
+    path: '/pre-society',
+    component: PreSociety,
+    icon: 'snippets',
+  },
+  {
     menu: '亲社会实验',
     path: '/society',
     component: Society,
+    icon: 'snippets',
+  },
+  {
+    menu: '【预】风险偏好',
+    path: '/pre-risk',
+    component: PreRisk,
     icon: 'snippets',
   },
   {

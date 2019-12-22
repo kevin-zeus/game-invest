@@ -6,4 +6,6 @@ export default {
   society: true,
   risk: true,
   weather: true,
+  pre_society: true,
+  pre_risk: true,
 };
