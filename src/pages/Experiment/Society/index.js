@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, message } from 'antd';
+import { Button } from 'antd';
 import styled from 'styled-components';
 import configs from './test.config';
 
@@ -39,11 +39,11 @@ class Society extends Component {
       });
     }
 
-    const expeComped = await ResultService.getCurrentUserResult();
-    if (!expeComped || !expeComped.pre_risk) {
-      message.warn('请先完成实验R-预');
-      history.goBack();
-    }
+    // const expeComped = await ResultService.getCurrentUserResult();
+    // if (!expeComped || !expeComped.pre_risk) {
+    //   message.warn('请先完成实验R-预');
+    //   history.goBack();
+    // }
 
     this.setState({
       id: expe[0].objectId,

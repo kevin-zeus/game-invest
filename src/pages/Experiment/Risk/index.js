@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, message } from 'antd';
+import { Button } from 'antd';
 import styled from 'styled-components';
 import configs from './test.config';
 
@@ -39,11 +39,11 @@ class Risk extends Component {
       });
     }
 
-    const expeComped = await ResultService.getCurrentUserResult();
-    if (!expeComped || !expeComped.society) {
-      message.warn('请先完成实验S');
-      history.goBack();
-    }
+    // const expeComped = await ResultService.getCurrentUserResult();
+    // if (!expeComped || !expeComped.society) {
+    //   message.warn('请先完成实验S');
+    //   history.goBack();
+    // }
 
     this.setState({
       id: expe[0].objectId,

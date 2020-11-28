@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Button, message } from 'antd';
+import { Button } from 'antd';
 import configs from './test.config';
 
 import ExperimentService from '../../../server/Experiment';
@@ -40,11 +40,11 @@ class TestA extends Component {
       });
     }
 
-    const expeComped = await ResultService.getCurrentUserResult();
-    if (!expeComped || !expeComped.weather) {
-      message.warn('请先完成实验W');
-      history.goBack();
-    }
+    // const expeComped = await ResultService.getCurrentUserResult();
+    // if (!expeComped || !expeComped.weather) {
+    //   message.warn('请先完成实验W');
+    //   history.goBack();
+    // }
 
     this.setState({
       id: expe[0].objectId,
