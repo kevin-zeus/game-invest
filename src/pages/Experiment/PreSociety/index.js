@@ -39,11 +39,11 @@ class Society extends Component {
       });
     }
 
-    const expeComped = await ResultService.getCurrentUserResult();
-    if (!expeComped || !expeComped.emotion) {
-      message.warn('请先完成实验E');
-      history.goBack();
-    }
+    // const expeComped = await ResultService.getCurrentUserResult();
+    // if (!expeComped || !expeComped.emotion) {
+    //   message.warn('请先完成实验E');
+    //   history.goBack();
+    // }
 
     this.setState({
       id: expe[0].objectId,
