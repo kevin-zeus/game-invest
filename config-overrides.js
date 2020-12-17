@@ -3,7 +3,6 @@ const {
   fixBabelImports,
   addLessLoader,
   addDecoratorsLegacy,
-  useEslintRc,
 // eslint-disable-next-line import/no-extraneous-dependencies
 } = require('customize-cra');
 
@@ -21,5 +20,4 @@ module.exports = override(
     },
   }),
   addDecoratorsLegacy(), // 配置装饰器
-  useEslintRc(), // 使用eslintrc做代码限制
 );
