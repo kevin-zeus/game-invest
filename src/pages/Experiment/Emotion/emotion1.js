@@ -79,7 +79,6 @@ class emotion1 extends Component {
     }
   }
 
-
   render() {
     const { disabled, formList, senconds } = this.state;
     return (

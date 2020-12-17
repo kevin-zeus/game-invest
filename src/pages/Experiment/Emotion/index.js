@@ -79,7 +79,6 @@ class Emotion extends Component {
     });
   }
 
-
   render() {
     const {
       btnMsg, index, id,
