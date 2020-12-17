@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, message } from 'antd';
+import { Button } from 'antd';
 import styled from 'styled-components';
 import configs from './test.config';
 
